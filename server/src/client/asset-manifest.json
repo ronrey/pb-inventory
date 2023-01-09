@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.11e15c8d.chunk.css",
+    "main.js": "/static/js/main.b8d32c23.chunk.js",
+    "main.js.map": "/static/js/main.b8d32c23.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3699c1b7.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3699c1b7.js.map",
+    "static/js/2.a7b7ffc1.chunk.js": "/static/js/2.a7b7ffc1.chunk.js",
+    "static/js/2.a7b7ffc1.chunk.js.map": "/static/js/2.a7b7ffc1.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.1a5bb8f5b56766857179df4b6ffd6fc0.js": "/precache-manifest.1a5bb8f5b56766857179df4b6ffd6fc0.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.11e15c8d.chunk.css.map": "/static/css/main.11e15c8d.chunk.css.map",
+    "static/js/2.a7b7ffc1.chunk.js.LICENSE.txt": "/static/js/2.a7b7ffc1.chunk.js.LICENSE.txt",
+    "static/media/styles.css": "/static/media/SanFranciscoText-MediumItalic.cc490b33.otf",
+    "static/media/beans.png": "/static/media/beans.4db72931.png",
+    "static/media/decaf.png": "/static/media/decaf.c1f87c67.png",
+    "static/media/french.png": "/static/media/french.6a865b20.png",
+    "static/media/header-beanbox.png": "/static/media/header-beanbox.aaa17677.png",
+    "static/media/header-bruu.png": "/static/media/header-bruu.2025c13b.png",
+    "static/media/header-cac.png": "/static/media/header-cac.2bf0cadd.png",
+    "static/media/header-pb.png": "/static/media/header-pb.e41b6b80.png",
+    "static/media/header-peets.png": "/static/media/header-peets.01b71d21.png",
+    "static/media/img1.png": "/static/media/img1.f2442139.png",
+    "static/media/img2.png": "/static/media/img2.995609ba.png",
+    "static/media/img3.png": "/static/media/img3.c69b60e0.png",
+    "static/media/img4.png": "/static/media/img4.b6edb561.png",
+    "static/media/img5.png": "/static/media/img5.f0d2c086.png",
+    "static/media/light.png": "/static/media/light.f8bf9b85.png",
+    "static/media/medium.png": "/static/media/medium.ad2f8fd0.png",
+    "static/media/notDecaf.png": "/static/media/notDecaf.fc1d52a8.png",
+    "static/media/ultraLight.png": "/static/media/ultraLight.71bec6dd.png",
+    "static/media/vienna.png": "/static/media/vienna.d1f30a0c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3699c1b7.js",
+    "static/js/2.a7b7ffc1.chunk.js",
+    "static/css/main.11e15c8d.chunk.css",
+    "static/js/main.b8d32c23.chunk.js"
+  ]
+}
