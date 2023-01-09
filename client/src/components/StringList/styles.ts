@@ -7,7 +7,7 @@ export const styles = createStyles({
     // margin: "auto",
     // width: 388,
     margin: 8,
-    padding: 8
+    padding: '8px 16px'
   },
   title: {
     //margin: "auto",

@@ -3,17 +3,15 @@ import { useEffect, useState } from "react";
 import { Button, Fab, Input, Paper, TextField, Typography } from "@mui/material";
 import { styles } from "./styles";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
-
 import { useNavigate } from "react-router-dom";
-
-
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { Coffee } from '../coffee';
+import { CoffeeInput } from "../coffeeInput";
 
 interface TotalCoffees {
   totalCoffees: string;
@@ -146,7 +144,7 @@ query GetCoffees {
   const navagate = useNavigate();
   const [coffeeCount, setCoffeeCount] = useState('');
   const [coffees, setCoffees] = useState<Coffee[]>([]);
-
+  const [coffee, setCoffee] = useState<Coffee | null>(null)
 
   const [addCoffee] = useMutation(ADD_COFFEE, {
     onCompleted(data) {
@@ -171,7 +169,6 @@ query GetCoffees {
   const [getCoffees] = useLazyQuery<GetCoffees>(GET_COFFEES, {
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
-      debugger
       setCoffees(data.getCoffees);
       setTimeout(() => getCoffees(), REFREASH_RATE_COFFEES);
     },
@@ -196,189 +193,43 @@ query GetCoffees {
       },
     });
   };
+
+  const getCoffee = (_id: string) => {
+    return coffees.find((coffee) => coffee._id === _id);
+  }
   const handleNavagateClick = () => {
     navagate('/coffee')
   };
-
-  /* 
-  const handleParagraphChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setParagraphs([event.target.value]);
-  };
-  const handleKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKey(event.target.value);
-  };
-  const handleDecafChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDecaf(event.target.checked);
-  };
-  const handleStateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState(event.target.value);
-  };
-  const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRegion(event.target.value);
-  };
-  const handleRoastChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRoast(event.target.value);
-  };
-  const handleMouthfeelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMouthfeel(parseFloat(event.target.value));
-  };
-  const handleAcidityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAcidity(parseFloat(event.target.value));
-  };
-  const handleCaramelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCaramel(parseFloat(event.target.value));
-  };
-  const handleFlowerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFlower(parseFloat(event.target.value));
-  };
-  const handleFruitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFruit(parseFloat(event.target.value));
+  const handleCoffeeClick = (_id: string) => {
+    console.log('coffee clicked')
+    const c = getCoffee(_id);
+    if (c)
+      setCoffee(c);
+    debugger
   };
 
-  const handleFlavorsChange = (flavs: string[]) => {
-  };
-  const handleQualitiesChange = (qual: string[]) => {
-    setQualities(qual);
-  };
-  const handlePriceChange = (prices: Price[]) => {
-    setPrices(prices);
-  };
 
-  const renderGeneral = () => {
-    return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>general</Typography>
-        <div css={styles.generalContainer}>
-          <FormControlLabel css={styles.decafLabelSwitch} label="Decaf" control={
-            <Switch size="small" checked={decaf} onChange={handleDecafChange} />
-          } />
-          <TextField label="key" css={styles.generalTextField} value={key} onChange={handleKeyChange} />
-          <TextField label="state" css={styles.generalTextField} value={state} onChange={handleStateChange} />
-          <TextField label="region" css={styles.generalTextField} value={region} onChange={handleRegionChange} />
-          <TextField label="roast" css={styles.generalTextField} value={roast} onChange={handleRoastChange} />
-        </div>
-      </Paper>
-
-    )
-  }
-  const renderPrices = () => {
-    return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>prices</Typography>
-        <div css={styles.generalContainer}>
-          <PriceList list={prices} onChange={handlePriceChange} title="prices" />
-
-        </div>
-      </Paper>
-    )
-  }
-  const renderDescriptions = () => {
-    return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>descriptions</Typography>
-        <div css={styles.generalContainer}>
-          <StringList list={flavors} onChange={handleFlavorsChange} title="flavors" />
-          <StringList list={qualities} onChange={handleQualitiesChange} title="qualities" />
-        </div>
-        <TextField label="paragraph"
-          multiline
-          rows={4}
-          css={styles.paragraphTextField}
-          value={paragraphs[0]}
-          onChange={handleParagraphChange} />
-
-      </Paper>
-    )
-  }
-  const renderFlavorProfile = () => {
-    return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>flavor profile</Typography>
-        <div css={styles.flavorProfileContainer}>
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
-
-          }} label="mouthfeel" value={mouthfeel} onChange={handleMouthfeelChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
-
-          }} label="acidity" value={acidity} onChange={handleAcidityChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
-
-          }} label="caramel" value={caramel} onChange={handleCaramelChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
-
-          }} label="fruit" value={fruit} onChange={handleFruitChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
-
-          }} label="flower" value={flower} onChange={handleFlowerChange} type='number' />
-        </div>
-      </Paper>
-
-    )
-  } */
-  const renderCoffees = () => {
-    return (<div>
-      {coffees.map((coffee, i) => (
-        <div key={i}>
-          {coffee._id}
-        </div>
-      ))}
-    </div>)
-  };
-
-  function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) {
-    return { name, calories, fat, carbs, protein };
-  }
   const renderTable = () => {
-
-    const rows = [
-      createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-      createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-      createData('Eclair', 262, 16.0, 24, 6.0),
-      createData('Cupcake', 305, 3.7, 67, 4.3),
-      createData('Gingerbread', 356, 16.0, 49, 3.9),
-    ];
-
     return (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell align="center">region</TableCell>
+              <TableCell align="center">roast</TableCell>
+              <TableCell align="center">key</TableCell>
+              <TableCell align="center">decaf</TableCell>
+              <TableCell align="center">state</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+            {coffees.map((row) => (
+              <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} onClick={() => handleCoffeeClick(row._id)}>
+                <TableCell component="th" align='center' scope="row" onClick={() => console.log('clicked')}> {row.region} </TableCell>
+                <TableCell align="center">{row.roast}</TableCell>
+                <TableCell align="center">{row.key}</TableCell>
+                <TableCell align="center">{row.decaf ? 'true' : 'false'}</TableCell>
+                <TableCell align="center">{row.state}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -386,6 +237,9 @@ query GetCoffees {
       </TableContainer>
     );
 
+  }
+  const renderCoffee = () => {
+    return coffee === null ? null : (<CoffeeInput coffee={coffee} onChange={(c) => { debugger }} />)
   }
   const renderDisplay = () => {
     return (
@@ -406,13 +260,7 @@ query GetCoffees {
   }
   return (
     <Paper elevation={16} css={styles.container}>
-      <div css={styles.headerContainer}>
-        <Typography css={styles.title} variant="h6">Coffee</Typography>
-        <Fab variant="extended" color='primary' onClick={handleNavagateClick} >
-          coffee
-        </Fab>
-      </div>
-      {renderDisplay()}
+      {coffee === null && renderDisplay()}
       <Button
         fullWidth
         css={styles.fullWidthButton}
@@ -423,9 +271,9 @@ query GetCoffees {
           onAddCoffee();
         }}
       >
-        add
+        update
       </Button>
-      {renderTable()}
+      {coffee ? renderCoffee() : renderTable()}
 
       {/* renderGeneral()}
 

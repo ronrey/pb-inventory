@@ -119,7 +119,7 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
       <div css={styles.itemContainer} >
         {
           list.map((price: Price, i: number) => (
-            <div css={styles.itemContainer} key={i} >
+            <div css={styles.item} key={i} >
               <Input css={styles.editInput} value={price.quantity} onChange={(e) => handleListItemChange('quantity', e, i)} type='number' />
               <Typography css={styles.for}>for</Typography>
 

@@ -3,7 +3,7 @@ export const styles = createStyles({
   container: {
     display: "flex",
     flexFlow: "column wrap",
-    justifyContent: "center",
+    //justifyContent: "center",
     // margin: "auto",
     // width: 388,
     margin: 8,
@@ -34,13 +34,20 @@ export const styles = createStyles({
   },
   itemContainer: {
     display: 'flex',
+    flexFlow: 'column',
+    //justifyContent: 'space-between',
+    alignItems: 'center',
+    // padding: 8
+  },
+  item: {
+    display: 'flex',
     flexFlow: 'row',
-    justifyContent: 'space-between',
+    //justifyContent: 'space-between',
     alignItems: 'center',
     // padding: 8
   },
   editInput: {
-    width: 100
+    //width: 100
   },
   for: {
     marginLeft: 4,
