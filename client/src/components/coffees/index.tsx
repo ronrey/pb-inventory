@@ -12,7 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Coffee } from '../coffee';
 import { CoffeeInput } from "../coffeeInput";
-
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 interface TotalCoffees {
   totalCoffees: string;
 }
@@ -100,15 +100,22 @@ interface CoffeeInput {
 
 interface Props { }
 export const Coffees: React.FC<Props> = () => {
-  const ADD_COFFEE = gql`
-  mutation AddCoffee($coffee:CoffeeInput) {
-  addCoffee(item:$coffee) {
+
+
+  const UPDATE_COFFEE = gql`
+  mutation UpdateCoffee($item:CoffeeInput) {
+  updateCoffee(item:$item) {
     code
     message
     success
   }
 }
   `;
+
+
+
+
+
   const TOTAL_COFFEES = gql`
     query totalCoffees {
       totalCoffees
@@ -145,10 +152,10 @@ query GetCoffees {
   const [coffeeCount, setCoffeeCount] = useState('');
   const [coffees, setCoffees] = useState<Coffee[]>([]);
   const [coffee, setCoffee] = useState<Coffee | null>(null)
-
-  const [addCoffee] = useMutation(ADD_COFFEE, {
+  const [updateCoffee] = useMutation(UPDATE_COFFEE, {
     onCompleted(data) {
-      debugger
+      console.log(`update completed sucessfully`)
+      setCoffee(null);
       // setShowProgress(false);
     },
     onError: (err) => {
@@ -176,27 +183,47 @@ query GetCoffees {
       debugger;
     },
   });
-
   useEffect(() => {
     totalCoffees();
     getCoffees();
   }, [totalCoffees, getCoffees]);
-
-
-  const onAddCoffee = () => {
-    const c = 'createCoffeeInput()';
-    console.log(c)
-    debugger
-    addCoffee({
+  const onUpdateCoffee = () => {
+    updateCoffee({
       variables: {
-        coffee: c,
+        item: createCoffeeData(),
       },
     });
+  };
+  const createPrices = (coffee: Coffee) => {
+    return coffee.prices.map((price) => ({ price: price.price, measurement: price.measurement, quantity: price.quantity }))
+  }
+  const createCoffeeData = () => {
+    return coffee ? {
+      _id: coffee._id,
+      state: coffee.state,
+      key: coffee.key,
+      decaf: coffee.decaf,
+      prices: createPrices(coffee),
+      mouthfeel: coffee.mouthfeel,
+      acidity: coffee.acidity,
+      caramel: coffee.caramel,
+      fruit: coffee.fruit,
+      flower: coffee.flower,
+      flavors: coffee.flavors,
+      qualities: coffee.qualities,
+      region: coffee.region,
+      roast: coffee.roast,
+      paragraphs: coffee.paragraphs
+    } : null;
   };
 
   const getCoffee = (_id: string) => {
     return coffees.find((coffee) => coffee._id === _id);
-  }
+  };
+  const handleCoffeeChange = (coffee: Coffee) => {
+    setCoffee(coffee);
+  };
+
   const handleNavagateClick = () => {
     navagate('/coffee')
   };
@@ -205,10 +232,7 @@ query GetCoffees {
     const c = getCoffee(_id);
     if (c)
       setCoffee(c);
-    debugger
   };
-
-
   const renderTable = () => {
     return (
       <TableContainer component={Paper}>
@@ -236,10 +260,16 @@ query GetCoffees {
         </Table>
       </TableContainer>
     );
-
   }
   const renderCoffee = () => {
-    return coffee === null ? null : (<CoffeeInput coffee={coffee} onChange={(c) => { debugger }} />)
+    if (coffee !== null)
+      return (
+        <div>
+          {renderButtons()}
+          <CoffeeInput coffee={coffee} onChange={handleCoffeeChange} />
+        </div>
+      )
+    return null;
   }
   const renderDisplay = () => {
     return (
@@ -252,28 +282,52 @@ query GetCoffees {
             {`${coffeeCount}`}
           </Typography>
         </div>
-
-
       </div>
-
     )
   }
-  return (
-    <Paper elevation={16} css={styles.container}>
-      {coffee === null && renderDisplay()}
+  const renderButtons = () => {
+    return (<div css={styles.buttonContainer}>
       <Button
-        fullWidth
-        css={styles.fullWidthButton}
+        css={styles.button}
         variant="contained"
         size="small"
         color="primary"
         onClick={() => {
-          onAddCoffee();
+          onUpdateCoffee();
         }}
       >
         update
       </Button>
-      {coffee ? renderCoffee() : renderTable()}
+      <Button
+        css={styles.button}
+        variant="contained"
+        size="small"
+        color="primary"
+        onClick={() => {
+          setCoffee(null)
+        }}
+      >
+        close
+      </Button>
+    </div>)
+  }
+  const renderCoffees = () => {
+    return (
+      <div>
+        <div css={styles.headerContainer}>
+          <Typography css={styles.title} variant="h6">Coffees</Typography>
+          <Button color="primary" onClick={handleNavagateClick} >
+            <AddCircleOutlineIcon />add
+          </Button>
+        </div>
+        {renderDisplay()}
+        {renderTable()}
+      </div>
+    )
+  }
+  return (
+    <Paper elevation={16} css={styles.container}>
+      {coffee ? renderCoffee() : renderCoffees()}
 
       {/* renderGeneral()}
 

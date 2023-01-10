@@ -66,8 +66,15 @@ export const styles = createStyles({
     margin: 8,
     width: 440
   },
-  fullWidthButton: {
+  buttonContainer: {
     margin: '4px 4px ',
-    width: '90%'
+    display: 'flex',
+    justifyContent: 'flex-end',
+    //  border: 'solid'
+    //  width: '90%'
+  },
+  button: {
+    margin: '4px 4px ',
+    //  width: '90%'
   }
 });

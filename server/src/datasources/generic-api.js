@@ -61,11 +61,12 @@ class BruuApi extends MongoDataSource {
     });
   }
   async updateItem(item) {
+    debugger
     const _this = this
     const { _id } = item;
     delete item._id;
     item.updatedAt = new Date();
-    const query = { _id: ObjectId(id) };
+    const query = { _id: ObjectId(_id) };
     const newvalues = { $set: item };
     return await this.collection.updateOne(query, newvalues).then((result) => {
       debugger

@@ -69,25 +69,6 @@ interface Props {
   onChange: (coffee: Coffee) => void;
 }
 export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
-
-  //   const createCoffeeInput = () => {
-  //     return {
-  //       state,
-  //       key,
-  //       decaf,
-  //       prices,
-  //       mouthfeel,
-  //       acidity,
-  //       caramel,
-  //       fruit,
-  //       flower,
-  //       flavors,
-  //       qualities,
-  //       region,
-  //       roast,
-  //       paragraphs
-  //     }
-  //   };
   const handleParagraphChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCoffee = { ...coffee };
     newCoffee.paragraphs = [event.target.value];
@@ -202,7 +183,6 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
     )
   }
   const renderFlavorProfile = () => {
-    debugger
     return (
       <Paper css={styles.paper} elevation={4} >
         <Typography variant="h6" css={styles.sectionLabel}>flavor profile</Typography>

@@ -9,7 +9,7 @@ import { StringList } from '../StringList';
 import { PriceList } from '../PriceList'
 import { useNavigate } from "react-router-dom";
 import { CoffeeInput } from "../coffeeInput";
-
+import ListIcon from '@mui/icons-material/List';
 interface Props {
 
 }
@@ -88,7 +88,6 @@ interface Coffee {
 
 interface Props { }
 export const Coffee: React.FC<Props> = () => {
-  debugger
   const ADD_COFFEE = gql`
   mutation AddCoffee($coffee:Coffee) {
   addCoffee(item:$coffee) {
@@ -164,7 +163,6 @@ export const Coffee: React.FC<Props> = () => {
     navagate('/coffees')
   };
   const handleCoffeeChange = (coffee: Coffee) => {
-    debugger
     setCoffee(coffee);
   };
 
@@ -189,13 +187,12 @@ export const Coffee: React.FC<Props> = () => {
     <Paper elevation={16} css={styles.container}>
       <div css={styles.headerContainer}>
         <Typography css={styles.title} variant="h6">Coffee</Typography>
-        <Fab variant="extended" color="primary" onClick={handleNavagateClick} >
-          coffees
-        </Fab>
+        <Button color="primary" onClick={handleNavagateClick} >
+          <ListIcon />coffees
+        </Button>
       </div>
       {renderDisplay()}
       <Button
-        fullWidth
         css={styles.fullWidthButton}
         variant="contained"
         size="small"
