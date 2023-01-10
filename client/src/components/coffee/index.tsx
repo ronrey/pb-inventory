@@ -1,12 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { Button, Fab, Input, Paper, TextField, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import { styles } from "./styles";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import { StringList } from '../StringList';
-import { PriceList } from '../PriceList'
 import { useNavigate } from "react-router-dom";
 import { CoffeeInput } from "../coffeeInput";
 import ListIcon from '@mui/icons-material/List';
@@ -89,8 +85,8 @@ interface Coffee {
 interface Props { }
 export const Coffee: React.FC<Props> = () => {
   const ADD_COFFEE = gql`
-  mutation AddCoffee($coffee:Coffee) {
-  addCoffee(item:$coffee) {
+  mutation AddCoffee($item:CoffeeInput) {
+  addCoffee(item:$item) {
     code
     message
     success
@@ -129,33 +125,35 @@ export const Coffee: React.FC<Props> = () => {
     totalCoffees();
   }, [totalCoffees,]);
 
-  const createCoffeeInput = () => {
-    return {
-      /*     state,
-          key,
-          decaf,
-          prices,
-          mouthfeel,
-          acidity,
-          caramel,
-          fruit,
-          flower,
-          flavors,
-          qualities,
-          region,
-          roast,
-          paragraphs */
-    }
+  const createPrices = (coffee: Coffee) => {
+    return coffee.prices.map((price) => ({ price: price.price, measurement: price.measurement, quantity: price.quantity }))
   }
-
+  const createCoffeeData = () => {
+    return coffee ? {
+      state: coffee.state,
+      key: coffee.key,
+      decaf: coffee.decaf,
+      prices: createPrices(coffee),
+      mouthfeel: coffee.mouthfeel,
+      acidity: coffee.acidity,
+      caramel: coffee.caramel,
+      fruit: coffee.fruit,
+      flower: coffee.flower,
+      flavors: coffee.flavors,
+      qualities: coffee.qualities,
+      region: coffee.region,
+      roast: coffee.roast,
+      paragraphs: coffee.paragraphs
+    } : null;
+  };
 
 
   const onAddCoffee = () => {
-    const c = createCoffeeInput();
+    const c = createCoffeeData();
     console.log(c)
     addCoffee({
       variables: {
-        coffee: c,
+        item: c,
       },
     });
   };
