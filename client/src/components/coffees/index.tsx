@@ -1,19 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Modal, Paper, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Typography } from "@mui/material";
 import { styles } from "./styles";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { Coffee } from '../coffee';
 import { CoffeeInput } from "../coffeeInput";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { EnhancedTable } from '../enhancedTable'
 interface TotalCoffees {
   totalCoffees: string;
 }
@@ -48,24 +42,6 @@ interface Coffee {
   roast: string
   paragraphs: string[]
 }
-// interface CoffeeInput {
-//   state: string
-//   key: string
-//   decaf: boolean
-//   prices: Price[]
-//   mouthfeel: number
-//   acidity: number
-//   caramel: number
-//   fruit: number
-//   flower: number
-//   flavors: string[]
-//   qualities: string[]
-//   region: string
-//   roast: string
-//   paragraphs: string[]
-// }
-
-
 interface Props { }
 export const Coffees: React.FC<Props> = () => {
   const UPDATE_COFFEE = gql`
@@ -76,23 +52,20 @@ export const Coffees: React.FC<Props> = () => {
         success
       }
     }
-`;
-
-
+  `;
   const REMOVE_COFFEE = gql`
-mutation RemoveCoffee($id: ID) {
-    removeCoffee(id: $id) {
-      code
-      message
-      success
+    mutation RemoveCoffee($id: ID) {
+      removeCoffee(id: $id) {
+        code
+        message
+        success
+      }
     }
-  }
-`;
-
+  `;
   const TOTAL_COFFEES = gql`
-    query totalCoffees {
-      totalCoffees
-    }
+      query totalCoffees {
+        totalCoffees
+      }
   `;
   const GET_COFFEES = gql`
     query GetCoffees {
@@ -144,7 +117,6 @@ mutation RemoveCoffee($id: ID) {
     onCompleted(data) {
       debugger
       console.log(`remove completed sucessfully`)
-      // setCoffee(null);
       // setShowProgress(false);
     },
     onError: (err) => {
@@ -152,7 +124,6 @@ mutation RemoveCoffee($id: ID) {
       debugger;
     },
   });
-
   const [totalCoffees] = useLazyQuery<TotalCoffees>(TOTAL_COFFEES, {
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
@@ -261,45 +232,11 @@ mutation RemoveCoffee($id: ID) {
       </Dialog>
     )
   }
-  const renderTable = () => {
+  const renderEnhancedTable = () => {
     return (
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead css={styles.tableHeadingRow}>
-            <TableRow>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center"></TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">key</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">state</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">region</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">roast</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">decaf</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">mouth</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">acidity</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">caramel</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">fruit</TableCell>
-              <TableCell component="th" css={styles.tableHeadingCell} align="center">flower</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {coffees.map((row) => (
-              <TableRow key={row._id} css={styles.tableRow} onClick={() => handleCoffeeClick(row._id)}>
-                <TableCell css={styles.tableCell} align="center"><DeleteIcon onClick={(e) => { handleDeleteClick(row._id); e.stopPropagation(); }} /></TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.key}</TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.state}</TableCell>
-                <TableCell css={styles.tableCell} align='center'> {row.region} </TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.roast}</TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.decaf ? 'true' : 'false'}</TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.mouthfeel}</TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.acidity}</TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.caramel}</TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.fruit}</TableCell>
-                <TableCell css={styles.tableCell} align="center">{row.flower}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    );
+      <EnhancedTable data={coffees} onDeleteClick={handleDeleteClick} onRowClick={handleCoffeeClick} />
+    )
+
   }
   const renderCoffee = () => {
     if (coffee !== null)
@@ -361,7 +298,7 @@ mutation RemoveCoffee($id: ID) {
           </Button>
         </div>
         {renderDisplay()}
-        {renderTable()}
+        {renderEnhancedTable()}
       </div>
     )
   }

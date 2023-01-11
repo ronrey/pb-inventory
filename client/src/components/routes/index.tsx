@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Coffee } from "../coffee";
 import { Coffees } from "../coffees";
+import { EnhancedTable } from "../enhancedTable";
 interface Props { }
 export const AppRoutes: React.FC<Props> = () => {
   return (
