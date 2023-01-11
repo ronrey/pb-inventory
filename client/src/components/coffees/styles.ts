@@ -76,5 +76,30 @@ export const styles = createStyles({
   button: {
     margin: '4px 4px ',
     //  width: '90%'
+  },
+  tableCell: {
+    //  fontSize: '1rem'
+  },
+  tableHeadingCell: {
+    fontSize: '.85rem'
+  },
+  tableRow: {
+    borderBottom: '1.5px solid ',
+    cursor: 'pointer'
+
+  },
+  tableHeadingRow: {
+    borderBottom: '3px solid '
+  },
+  modalDlog: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    background: 'black',
+    //color: 'white',
+    border: '2px solid #000',
+    p: 4,
   }
 });

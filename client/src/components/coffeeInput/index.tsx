@@ -188,28 +188,33 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
         <Typography variant="h6" css={styles.sectionLabel}>flavor profile</Typography>
         <div css={styles.flavorProfileContainer}>
           <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
+            min: .10,
+            step: .10,
+            max: 1.0,
 
           }} label="mouthfeel" value={coffee.mouthfeel} onChange={handleMouthfeelChange} type='number' />
           <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
+            min: .10,
+            step: .10,
+            max: 1.0,
 
           }} label="acidity" value={coffee.acidity} onChange={handleAcidityChange} type='number' />
           <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
+            min: .10,
+            step: .10,
+            max: 1.0,
 
           }} label="caramel" value={coffee.caramel} onChange={handleCaramelChange} type='number' />
           <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
+            min: .10,
+            step: .10,
+            max: 1.0,
 
           }} label="fruit" value={coffee.fruit} onChange={handleFruitChange} type='number' />
           <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .01,
-            step: .01,
+            min: .10,
+            step: .10,
+            max: 1.0,
 
           }} label="flower" value={coffee.flower} onChange={handleFlowerChange} type='number' />
         </div>
