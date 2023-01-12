@@ -10,7 +10,7 @@ export const styles = createStyles({
     marginTop: 8,
   },
   headerContainer: {
-    width: '90%',
+    //  width: '90%',
     display: 'flex',
     justifyContent: 'space-between',
     margin: 'auto',
@@ -24,7 +24,7 @@ export const styles = createStyles({
     display: "flex",
     justifyContent: "space-around",
     margin: "auto",
-    width: "90%",
+    //    width: "90%",
   },
   labelAndOutput: {
     display: "flex",
@@ -34,7 +34,6 @@ export const styles = createStyles({
   output: { fontSize: "1.0rem" },
 
   flavorProfile: {
-    width: 100,
     margin: 8,
   },
   flavorProfileContainer: {
@@ -54,11 +53,13 @@ export const styles = createStyles({
     margin: 8,
   },
   generalTextField: {
-    width: 100,
+    margin: 8,
+  },
+  textField: {
     margin: 8,
   },
   paragraphTextField: {
-    width: 400,
+    // width: 400,
     margin: 8,
   },
   decafLabelSwitch: {
@@ -69,7 +70,7 @@ export const styles = createStyles({
   },
   paper: {
     margin: 8,
-    width: 440
+    //   width: 440
   },
   fullWidthButton: {
     margin: '4px 4px ',

@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { Paper, TextField, Typography } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Paper, TextField, Typography } from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styles } from "./styles";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { StringList } from '../StringList';
 import { PriceList } from '../PriceList'
-
+import { inventory_status } from '../../constants/select'
 
 interface Price {
   measurement: string
@@ -44,9 +45,15 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
     newBlend.decaf = event.target.checked;
     onChange(newBlend);
   };
-  const handleStateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStateChange = (event: SelectChangeEvent) => {
     const newBlend = { ...blend };
     newBlend.state = event.target.value;
+    onChange(newBlend);
+  };
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newBlend = { ...blend };
+    newBlend.name = event.target.value;
     onChange(newBlend);
   };
 
@@ -91,6 +98,26 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
     onChange(newBlend);
   };
 
+
+  const renderStateSelect = () => {
+    return (
+      <FormControl style={{ width: 140 }}>
+        <InputLabel id="demo-simple-select-label">State</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={blend.state}
+          label="state"
+          onChange={handleStateChange}
+        >
+          {
+            inventory_status.map((item, i) => (<MenuItem key={i} value={item.value}>{item.display}</MenuItem>))
+          }
+
+        </Select>
+      </FormControl>
+    )
+  }
   const renderGeneral = () => {
     return (
       <Paper css={styles.paper} elevation={4} >
@@ -99,7 +126,8 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
           <FormControlLabel css={styles.decafLabelSwitch} label="Decaf" control={
             <Switch size="small" checked={blend.decaf} onChange={handleDecafChange} />
           } />
-          <TextField label="state" css={styles.generalTextField} value={blend.state} onChange={handleStateChange} />
+          <TextField label="name" css={styles.textField} value={blend.name} onChange={handleNameChange} />
+          {renderStateSelect()}
         </div>
       </Paper>
 

@@ -120,7 +120,7 @@ const headCells: readonly HeadCell[] = [
         id: 'mouthfeel',
         numeric: true,
         disablePadding: false,
-        label: 'mouth',
+        label: 'mouthfeel',
     },
     {
         id: 'acidity',
@@ -194,18 +194,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         </TableHead>
     );
 }
-
-
 export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick }) => {
-
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('name');
-    const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
     const [dense,] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
         property: keyof Data,
@@ -231,11 +225,6 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
-
-
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
     // Avoid a layout jump when reaching the last page with empty data.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
@@ -258,23 +247,15 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
                             {stableSort(data, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
-
                                     return (
                                         <TableRow
                                             hover
                                             onClick={(event) => handleClick(event, row._id)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
+                                            key={index}
                                         >
                                             <TableCell padding="checkbox">
-                                                <Button
-                                                    onClick={(event) => handleDeleteClick(event, row._id)}
-                                                >
+                                                <Button onClick={(event) => handleDeleteClick(event, row._id)}>
                                                     <DeleteIcon />
                                                 </Button>
                                             </TableCell>
@@ -286,7 +267,6 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
                                             >
                                                 {row.name}
                                             </TableCell>
-                                            <TableCell align="right">{row.name}</TableCell>
                                             <TableCell align="right">{row.state}</TableCell>
                                             <TableCell align="right">{row.decaf ? 'true' : 'false'}</TableCell>
                                             <TableCell align="right">{row.mouthfeel}</TableCell>

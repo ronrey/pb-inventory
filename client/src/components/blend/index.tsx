@@ -53,18 +53,14 @@ const protoBlend = {
   "paragraphs": [
     "this is a note"
   ],
-  "state": "new"
+  "state": "inhouse"
 };
 interface Price {
   measurement: string
   quantity: number
   price: number
 }
-interface Status {
-  success: boolean
-  code: string
-  message: string
-}
+
 interface BlendInterface {
   _id: string
   name: string
@@ -132,6 +128,7 @@ export const Blend: React.FC<Props> = () => {
   const createBlendData = () => {
     return blend ? {
       state: blend.state,
+      name: blend.name,
       decaf: blend.decaf,
       prices: createPrices(blend),
       "coffees": [

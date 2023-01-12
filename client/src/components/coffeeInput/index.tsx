@@ -1,47 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
-import { Paper, TextField, Typography } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import { styles } from "./styles";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
 import { StringList } from '../StringList';
 import { PriceList } from '../PriceList'
+import { inventory_status } from '../../constants/select'
 
-const protoCoffee = {
-  "state": "instock",
-  "key": "31",
-  "decaf": true,
-  "prices": [
-    {
-      "measurement": "lbs",
-      "quantity": 2,
-      "price": 12
-    },
-    {
-      "measurement": "ozs",
-      "quantity": 2,
-      "price": 12
-    }
-  ],
-  "mouthfeel": 0.5,
-  "acidity": 0.5,
-  "caramel": 0.5,
-  "fruit": 0.5,
-  "flower": 0.5,
-  "flavors": [
-    "crisp",
-    "fresh"
-  ],
-  "qualities": [
-    "cheap",
-    "bold"
-  ],
-  "region": "mexico",
-  "roast": "vienna",
-  "paragraphs": [
-    "paragrph"
-  ]
-}
 interface Price {
   measurement: string
   quantity: number
@@ -84,7 +50,7 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
     newCoffee.decaf = event.target.checked;
     onChange(newCoffee);
   };
-  const handleStateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStateChange = (event: SelectChangeEvent) => {
     const newCoffee = { ...coffee };
     newCoffee.state = event.target.value;
     onChange(newCoffee);
@@ -140,6 +106,25 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
     onChange(newCoffee);
   };
 
+  const renderStateSelect = () => {
+    return (
+      <FormControl style={{ width: 140 }}>
+        <InputLabel id="demo-simple-select-label">State</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={coffee.state}
+          label="state"
+          onChange={handleStateChange}
+        >
+          {
+            inventory_status.map((item, i) => (<MenuItem key={i} value={item.value}>{item.display}</MenuItem>))
+          }
+
+        </Select>
+      </FormControl>
+    )
+  }
   const renderGeneral = () => {
     return (
       <Paper css={styles.paper} elevation={4} >
@@ -149,7 +134,7 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
             <Switch size="small" checked={coffee.decaf} onChange={handleDecafChange} />
           } />
           <TextField label="key" css={styles.generalTextField} value={coffee.key} onChange={handleKeyChange} />
-          <TextField label="state" css={styles.generalTextField} value={coffee.state} onChange={handleStateChange} />
+          {renderStateSelect()}
           <TextField label="region" css={styles.generalTextField} value={coffee.region} onChange={handleRegionChange} />
           <TextField label="roast" css={styles.generalTextField} value={coffee.roast} onChange={handleRoastChange} />
         </div>
