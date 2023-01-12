@@ -4,15 +4,15 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Typog
 import { styles } from "./styles";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import { Coffee } from '../coffee';
-import { CoffeeInput } from "../coffeeInput";
+import { Blend } from '../blend';
+import { BlendInput } from "../blendInput";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { EnhancedTable } from './enhancedTable'
-interface TotalCoffees {
-  totalCoffees: string;
+interface TotalBlends {
+  totalBlends: string;
 }
-interface GetCoffees {
-  getCoffees: Coffee[];
+interface GetBlends {
+  getBlends: Blend[];
 }
 
 const REFREASH_RATE_COFFEE_COUNT = 1000;
@@ -25,12 +25,13 @@ interface Price {
   price: number
 }
 
-interface Coffee {
+interface Blend {
   _id: string
+  name: string
   state: string
-  key: string
   decaf: boolean
   prices: Price[]
+  coffees: string[]
   mouthfeel: number
   acidity: number
   caramel: number
@@ -38,15 +39,13 @@ interface Coffee {
   flower: number
   flavors: string[]
   qualities: string[]
-  region: string
-  roast: string
   paragraphs: string[]
 }
 interface Props { }
-export const Coffees: React.FC<Props> = () => {
+export const Blends: React.FC<Props> = () => {
   const UPDATE_COFFEE = gql`
-    mutation UpdateCoffee($item:CoffeeInput) {
-      updateCoffee(item:$item) {
+    mutation UpdateBlend($item:BlendInput) {
+      updateBlend(item:$item) {
         code
         message
         success
@@ -54,8 +53,8 @@ export const Coffees: React.FC<Props> = () => {
     }
   `;
   const REMOVE_COFFEE = gql`
-    mutation RemoveCoffee($id: ID) {
-      removeCoffee(id: $id) {
+    mutation RemoveBlend($id: ID) {
+      removeBlend(id: $id) {
         code
         message
         success
@@ -63,22 +62,21 @@ export const Coffees: React.FC<Props> = () => {
     }
   `;
   const TOTAL_COFFEES = gql`
-      query totalCoffees {
-        totalCoffees
+      query totalBlends {
+        totalBlends
       }
   `;
   const GET_COFFEES = gql`
-    query GetCoffees {
-      getCoffees {
+    query GetBlends {
+      getBlends {
         acidity
         _id
+        name
         caramel
-        createdAt
         decaf
         flavors
         flower
         fruit
-        key
         mouthfeel
         paragraphs
         prices {
@@ -87,23 +85,20 @@ export const Coffees: React.FC<Props> = () => {
           quantity
         }
         qualities
-        region
-        roast
         state
-        updatedAt
       }
     }
   `;
   const navagate = useNavigate();
-  const [coffeeCount, setCoffeeCount] = useState('');
-  const [coffees, setCoffees] = useState<Coffee[]>([]);
-  const [coffee, setCoffee] = useState<Coffee | null>(null);
+  const [blendCount, setBlendCount] = useState('');
+  const [blends, setBlends] = useState<Blend[]>([]);
+  const [blend, setBlend] = useState<Blend | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [deletee, setDeletee] = useState<Coffee | null>(null);
-  const [updateCoffee] = useMutation(UPDATE_COFFEE, {
+  const [deletee, setDeletee] = useState<Blend | null>(null);
+  const [updateBlend] = useMutation(UPDATE_COFFEE, {
     onCompleted(data) {
       console.log(`update completed sucessfully`)
-      setCoffee(null);
+      setBlend(null);
       // setShowProgress(false);
     },
     onError: (err) => {
@@ -113,7 +108,7 @@ export const Coffees: React.FC<Props> = () => {
   });
 
 
-  const [removeCoffee] = useMutation(REMOVE_COFFEE, {
+  const [removeBlend] = useMutation(REMOVE_COFFEE, {
     onCompleted(data) {
       debugger
       console.log(`remove completed sucessfully`)
@@ -124,90 +119,88 @@ export const Coffees: React.FC<Props> = () => {
       debugger;
     },
   });
-  const [totalCoffees] = useLazyQuery<TotalCoffees>(TOTAL_COFFEES, {
+  const [totalBlends] = useLazyQuery<TotalBlends>(TOTAL_COFFEES, {
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
-      setCoffeeCount(data.totalCoffees);
-      setTimeout(() => totalCoffees(), REFREASH_RATE_COFFEE_COUNT);
+      setBlendCount(data.totalBlends);
+      setTimeout(() => totalBlends(), REFREASH_RATE_COFFEE_COUNT);
     },
     onError: (err) => {
       debugger;
     },
   });
-  const [getCoffees] = useLazyQuery<GetCoffees>(GET_COFFEES, {
+  const [getBlends] = useLazyQuery<GetBlends>(GET_COFFEES, {
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
-      setCoffees(data.getCoffees);
-      setTimeout(() => getCoffees(), REFREASH_RATE_COFFEES);
+      setBlends(data.getBlends);
+      setTimeout(() => getBlends(), REFREASH_RATE_COFFEES);
     },
     onError: (err) => {
       debugger;
     },
   });
   useEffect(() => {
-    totalCoffees();
-    getCoffees();
-  }, [totalCoffees, getCoffees]);
-  const onUpdateCoffee = () => {
-    updateCoffee({
+    totalBlends();
+    getBlends();
+  }, [totalBlends, getBlends]);
+  const onUpdateBlend = () => {
+    updateBlend({
       variables: {
-        item: createCoffeeData(),
+        item: createBlendData(),
       },
     });
   };
-  const handleRemoveCoffee = () => {
+  const handleRemoveBlend = () => {
     if (deletee)
-      removeCoffee({
+      removeBlend({
         variables: {
           id: deletee._id,
         },
       });
   };
-  const createPrices = (coffee: Coffee) => {
-    return coffee.prices.map((price) => ({ price: price.price, measurement: price.measurement, quantity: price.quantity }))
+  const createPrices = (blend: Blend) => {
+    return blend.prices.map((price) => ({ price: price.price, measurement: price.measurement, quantity: price.quantity }))
   }
-  const createCoffeeData = () => {
-    return coffee ? {
-      _id: coffee._id,
-      state: coffee.state,
-      key: coffee.key,
-      decaf: coffee.decaf,
-      prices: createPrices(coffee),
-      mouthfeel: coffee.mouthfeel,
-      acidity: coffee.acidity,
-      caramel: coffee.caramel,
-      fruit: coffee.fruit,
-      flower: coffee.flower,
-      flavors: coffee.flavors,
-      qualities: coffee.qualities,
-      region: coffee.region,
-      roast: coffee.roast,
-      paragraphs: coffee.paragraphs
+  const createBlendData = () => {
+    return blend ? {
+      _id: blend._id,
+      state: blend.state,
+      name: blend.name,
+      decaf: blend.decaf,
+      prices: createPrices(blend),
+      mouthfeel: blend.mouthfeel,
+      acidity: blend.acidity,
+      caramel: blend.caramel,
+      fruit: blend.fruit,
+      flower: blend.flower,
+      flavors: blend.flavors,
+      qualities: blend.qualities,
+      paragraphs: blend.paragraphs
     } : null;
   };
-  const getCoffee = (_id: string) => {
-    const c = coffees.find((coffee) => coffee._id === _id);
+  const getBlend = (_id: string) => {
+    const c = blends.find((blend) => blend._id === _id);
     return c ? c : null;
   };
-  const handleCoffeeChange = (coffee: Coffee) => {
-    setCoffee(coffee);
+  const handleBlendChange = (blend: Blend) => {
+    setBlend(blend);
   };
   const handleNavagateClick = () => {
-    navagate('/coffee')
+    navagate('/blend')
   };
-  const handleCoffeeClick = (_id: string) => {
-    console.log('coffee clicked')
-    const c = getCoffee(_id);
+  const handleBlendClick = (_id: string) => {
+    console.log('blend clicked')
+    const c = getBlend(_id);
     if (c)
-      setCoffee(c);
+      setBlend(c);
   };
   const handleDeleteClick = (_id: string) => {
-    setDeletee(getCoffee(_id));
+    setDeletee(getBlend(_id));
     setOpen(true)
     console.log(`hande delete ${_id}`)
   }
   const handleOKedDelete = () => {
-    handleRemoveCoffee();
+    handleRemoveBlend();
     setOpen(false);
     setDeletee(null);
   }
@@ -219,9 +212,9 @@ export const Coffees: React.FC<Props> = () => {
         maxWidth="xs"
         open={open}
       >
-        <DialogTitle>Delete Coffee</DialogTitle>
+        <DialogTitle>Delete Blend</DialogTitle>
         <DialogContent dividers>
-          {`Do you really want to delete coffee with key = ${deletee.key}`}
+          {`Do you really want to delete blend with key = ${deletee.name}`}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={() => { setOpen(false) }}>
@@ -234,16 +227,16 @@ export const Coffees: React.FC<Props> = () => {
   }
   const renderEnhancedTable = () => {
     return (
-      <EnhancedTable data={coffees} onDeleteClick={handleDeleteClick} onRowClick={handleCoffeeClick} />
+      <EnhancedTable data={blends} onDeleteClick={handleDeleteClick} onRowClick={handleBlendClick} />
     )
 
   }
-  const renderCoffee = () => {
-    if (coffee !== null)
+  const renderBlend = () => {
+    if (blend !== null)
       return (
         <div>
           {renderButtons()}
-          <CoffeeInput coffee={coffee} onChange={handleCoffeeChange} />
+          <BlendInput blend={blend} onChange={handleBlendChange} />
         </div>
       )
     return null;
@@ -253,10 +246,10 @@ export const Coffees: React.FC<Props> = () => {
       <div css={styles.outputs}>
         <div css={styles.labelAndOutput}>
           <Typography css={styles.label} color="primary" variant="h6">
-            Coffee count:
+            Blend count:
           </Typography>
           <Typography css={styles.output} color="secondary" variant="h6">
-            {`${coffeeCount}`}
+            {`${blendCount}`}
           </Typography>
         </div>
       </div>
@@ -270,7 +263,7 @@ export const Coffees: React.FC<Props> = () => {
         size="small"
         color="primary"
         onClick={() => {
-          onUpdateCoffee();
+          onUpdateBlend();
         }}
       >
         update
@@ -281,18 +274,18 @@ export const Coffees: React.FC<Props> = () => {
         size="small"
         color="primary"
         onClick={() => {
-          setCoffee(null)
+          setBlend(null)
         }}
       >
         close
       </Button>
     </div>)
   }
-  const renderCoffees = () => {
+  const renderBlends = () => {
     return (
       <div>
         <div css={styles.headerContainer}>
-          <Typography css={styles.title} variant="h6">Coffees</Typography>
+          <Typography css={styles.title} variant="h6">Blends</Typography>
           <Button color="primary" onClick={handleNavagateClick} >
             <AddCircleOutlineIcon />add
           </Button>
@@ -305,7 +298,7 @@ export const Coffees: React.FC<Props> = () => {
   return (
     <Paper elevation={16} css={styles.container}>
       {renderDeleteAlert()}
-      {coffee ? renderCoffee() : renderCoffees()}
+      {blend ? renderBlend() : renderBlends()}
 
       {/* renderGeneral()}
 

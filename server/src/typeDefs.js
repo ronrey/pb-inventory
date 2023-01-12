@@ -4,10 +4,11 @@ module.exports = gql`
   scalar Upload
   type Query {
     totalCoffees: String!
+    totalBlends: String!
     getCoffee(id: String): Coffee
     getCoffees: [Coffee!]!
-    getBlend(id: String): OurBlend
-    getBlends: [OurBlend!]!
+    getBlend(id: String): Blend
+    getBlends: [Blend!]!
     getLearningItems: [LearningItem]
     getCustomSettings: CustomSettings
     getBrain: Brain!
@@ -15,10 +16,10 @@ module.exports = gql`
   type Mutation {
     addLearningItem(item: LearningItemInput): LearningItem
     addCoffee(item: CoffeeInput): Status
-    addBlend(item: OurBlendItemInput): Status
+    addBlend(item: BlendInput): Status
     updateLearningItem(item:LearningItemInput):Status
     updateCoffee(item:CoffeeInput):Status
-    updateBlend(item:OurBlendItemInput):Status
+    updateBlend(item:BlendInput):Status
     removeLearningItem(id:ID):Status
     removeCoffee(id:ID):Status
     removeBlend(id:ID):Status
@@ -83,15 +84,30 @@ module.exports = gql`
     price: Float
   }
   # our blend
-  type OurBlend {
+  type Blend {
     _id: ID
     state: String
     decaf: Boolean
     name: String
     createdAt: DateTime
     updatedAt: DateTime
-    price: Float
     prices: [Price]
+    coffees: [ID]
+    mouthfeel: Float
+    acidity: Float
+    caramel: Float
+    fruit: Float
+    flower: Float
+    flavors: [String!]
+    qualities: [String!]
+    paragraphs: [String!]
+  }
+  input BlendInput {
+    _id: ID
+    state: String
+    decaf: Boolean
+    name: String
+    prices: [PriceInput]
     coffees: [ID]
     mouthfeel: Float
     acidity: Float
