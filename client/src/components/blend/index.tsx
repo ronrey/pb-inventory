@@ -34,8 +34,7 @@ const protoBlend = {
     }
   ],
   "coffees": [
-    "5f9c6d9b0d2a9c505258e0b7",
-    "5f9c6d9b0d2a9c505258e0b9"
+
   ],
   "mouthfeel": 0.3,
   "acidity": 0.65,
@@ -60,7 +59,6 @@ interface Price {
   quantity: number
   price: number
 }
-
 interface BlendInterface {
   _id: string
   name: string
@@ -77,8 +75,6 @@ interface BlendInterface {
   qualities: string[]
   paragraphs: string[]
 }
-
-
 interface Props { }
 export const Blend: React.FC<Props> = () => {
   const ADD_COFFEE = gql`
@@ -131,10 +127,7 @@ export const Blend: React.FC<Props> = () => {
       name: blend.name,
       decaf: blend.decaf,
       prices: createPrices(blend),
-      "coffees": [
-        "5f9c6d9b0d2a9c505258e0b7",
-        "5f9c6d9b0d2a9c505258e0b9"
-      ],
+      coffees: blend.coffees,
       mouthfeel: blend.mouthfeel,
       acidity: blend.acidity,
       caramel: blend.caramel,

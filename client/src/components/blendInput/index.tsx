@@ -8,6 +8,7 @@ import Switch from '@mui/material/Switch';
 import { StringList } from '../StringList';
 import { PriceList } from '../PriceList'
 import { inventory_status } from '../../constants/select'
+import SelectCoffees from './selectCoffees'
 
 interface Price {
   measurement: string
@@ -97,8 +98,19 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
     newBlend.prices = prices;
     onChange(newBlend);
   };
-
-
+  const handleCoffeesChange = (coffeeIds: string[]) => {
+    const newBlend = { ...blend };
+    newBlend.coffees = coffeeIds;
+    onChange(newBlend);
+  };
+  const renderCoffeesSelect = () => {
+    debugger
+    return (
+      <div>
+        <SelectCoffees coffeeIDs={blend.coffees ? blend.coffees : []} onChange={handleCoffeesChange} />
+      </div>
+    )
+  }
   const renderStateSelect = () => {
     return (
       <FormControl style={{ width: 140 }}>
@@ -128,6 +140,7 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
           } />
           <TextField label="name" css={styles.textField} value={blend.name} onChange={handleNameChange} />
           {renderStateSelect()}
+          {renderCoffeesSelect()}
         </div>
       </Paper>
 

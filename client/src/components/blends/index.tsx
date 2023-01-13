@@ -8,6 +8,22 @@ import { Blend } from '../blend';
 import { BlendInput } from "../blendInput";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { EnhancedTable } from './enhancedTable'
+interface Blend {
+  _id: string
+  name: string
+  state: string
+  decaf: boolean
+  prices: Price[]
+  coffees: string[]
+  mouthfeel: number
+  acidity: number
+  caramel: number
+  fruit: number
+  flower: number
+  flavors: string[]
+  qualities: string[]
+  paragraphs: string[]
+}
 interface TotalBlends {
   totalBlends: string;
 }
@@ -25,22 +41,7 @@ interface Price {
   price: number
 }
 
-interface Blend {
-  _id: string
-  name: string
-  state: string
-  decaf: boolean
-  prices: Price[]
-  coffees: string[]
-  mouthfeel: number
-  acidity: number
-  caramel: number
-  fruit: number
-  flower: number
-  flavors: string[]
-  qualities: string[]
-  paragraphs: string[]
-}
+
 interface Props { }
 export const Blends: React.FC<Props> = () => {
   const UPDATE_COFFEE = gql`
@@ -73,6 +74,7 @@ export const Blends: React.FC<Props> = () => {
         _id
         name
         caramel
+        coffees
         decaf
         flavors
         flower
@@ -168,6 +170,7 @@ export const Blends: React.FC<Props> = () => {
       name: blend.name,
       decaf: blend.decaf,
       prices: createPrices(blend),
+      coffees: blend.coffees,
       mouthfeel: blend.mouthfeel,
       acidity: blend.acidity,
       caramel: blend.caramel,

@@ -208,19 +208,15 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
-
     const handleClick = (event: React.MouseEvent<unknown>, _id: string) => {
         onRowClick(_id)
     };
     const handleDeleteClick = (event: React.MouseEvent<unknown>, _id: string) => {
         onDeleteClick(_id)
     };
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
