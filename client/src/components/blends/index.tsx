@@ -299,7 +299,7 @@ export const Blends: React.FC<Props> = () => {
     )
   }
   return (
-    <Paper elevation={16} css={styles.container}>
+    <div css={styles.container}>
       {renderDeleteAlert()}
       {blend ? renderBlend() : renderBlends()}
 
@@ -310,6 +310,6 @@ export const Blends: React.FC<Props> = () => {
       {renderDescriptions() */}
 
 
-    </Paper>
+    </div>
   );
 };

@@ -6,11 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useEffect, useState } from 'react';
-import { regions } from '../../constants/select'
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+import { roasts } from '../../constants/select'
 const MenuProps = {
     PaperProps: {
         style: {
@@ -19,33 +15,27 @@ const MenuProps = {
         },
     },
 };
-
-
-interface Props { }
-
-
 interface Props {
-    region: string,
-    onChange: (region: string) => void;
+    roast: string,
+    onChange: (roast: string) => void;
 }
-
-export const RegionSelect: React.FC<Props> = ({ region, onChange }) => {
+export const RoastSelect: React.FC<Props> = ({ roast, onChange }) => {
     const handleChange = (event: SelectChangeEvent) => {
         onChange(event.target.value);
     };
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel >region</InputLabel>
+                <InputLabel >roast</InputLabel>
                 <Select
-                    value={region}
+                    value={roast}
                     onChange={handleChange}
                     input={<OutlinedInput label="Tag" />}
                     MenuProps={MenuProps}
                 >
-                    {regions.map((region, i) => (
-                        <MenuItem key={i} value={region.value}>
-                            <ListItemText primary={`${region.display}`} />
+                    {roasts.map((roast, i) => (
+                        <MenuItem key={i} value={roast.value}>
+                            <ListItemText primary={`${roast.display}`} />
                         </MenuItem>
                     ))}
                 </Select>
@@ -54,6 +44,6 @@ export const RegionSelect: React.FC<Props> = ({ region, onChange }) => {
     );
 }
 
-export default RegionSelect;
+export default RoastSelect;
 
 

@@ -111,8 +111,6 @@ export const Coffees: React.FC<Props> = () => {
       debugger;
     },
   });
-
-
   const [removeCoffee] = useMutation(REMOVE_COFFEE, {
     onCompleted(data) {
       debugger
@@ -303,17 +301,9 @@ export const Coffees: React.FC<Props> = () => {
     )
   }
   return (
-    <Paper elevation={16} css={styles.container}>
+    <div css={styles.container}>
       {renderDeleteAlert()}
       {coffee ? renderCoffee() : renderCoffees()}
-
-      {/* renderGeneral()}
-
-      {renderFlavorProfile()}
-      {renderPrices()}
-      {renderDescriptions() */}
-
-
-    </Paper>
+    </div>
   );
 };

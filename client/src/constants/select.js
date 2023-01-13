@@ -107,3 +107,22 @@ export const regions = [
         value: 'sumatra',
     },
 ]
+
+export const roasts = [
+    {
+        display: 'light',
+        value: 'light',
+    },
+    {
+        display: 'medium',
+        value: 'medium',
+    },
+    {
+        display: 'vienna',
+        value: 'vienna',
+    },
+    {
+        display: 'french',
+        value: 'french',
+    },
+]

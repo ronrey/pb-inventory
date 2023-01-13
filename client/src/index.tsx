@@ -15,13 +15,17 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 const theme = createTheme({
+
   palette: {
-    //mode: 'dark',
+    mode: 'dark',
     primary: {
-      main: blue[600],
+      main: blue[800],
     },
     secondary: {
-      main: blue[900],
+      main: blue[600],
+    },
+    background: {
+      default: blue[500],
     },
   },
 });

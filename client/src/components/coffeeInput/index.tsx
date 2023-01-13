@@ -7,7 +7,8 @@ import Switch from '@mui/material/Switch';
 import { StringList } from '../StringList';
 import { PriceList } from '../PriceList'
 import { inventory_status } from '../../constants/select'
-
+import { RegionSelect } from "../regionSelect";
+import { RoastSelect } from '../roastSelect'
 interface Price {
   measurement: string
   quantity: number
@@ -55,14 +56,14 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
     newCoffee.state = event.target.value;
     onChange(newCoffee);
   };
-  const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRegionChange = (region: string) => {
     const newCoffee = { ...coffee };
-    newCoffee.region = event.target.value;
+    newCoffee.region = region;
     onChange(newCoffee);
   };
-  const handleRoastChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRoastChange = (roast: string) => {
     const newCoffee = { ...coffee };
-    newCoffee.roast = event.target.value;
+    newCoffee.roast = roast;
     onChange(newCoffee);
   };
   const handleMouthfeelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,8 +136,8 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
           } />
           <TextField label="key" css={styles.generalTextField} value={coffee.key} onChange={handleKeyChange} />
           {renderStateSelect()}
-          <TextField label="region" css={styles.generalTextField} value={coffee.region} onChange={handleRegionChange} />
-          <TextField label="roast" css={styles.generalTextField} value={coffee.roast} onChange={handleRoastChange} />
+          <RegionSelect region={coffee.region} onChange={handleRegionChange} />
+          <RoastSelect roast={coffee.roast} onChange={handleRoastChange} />
         </div>
       </Paper>
 

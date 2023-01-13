@@ -69,7 +69,7 @@ export const styles = createStyles({
   },
   paper: {
     margin: 8,
-    width: 440
+    width: '80%'
   },
   fullWidthButton: {
     margin: '4px 4px ',

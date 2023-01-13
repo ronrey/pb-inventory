@@ -1,4 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import * as React from 'react';
+import { styles } from "./styles";
+
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -184,9 +187,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 <TableCell padding="checkbox">
 
                 </TableCell>
-                {headCells.map((headCell) => (
+                {headCells.map((headCell, i) => (
                     <TableCell
-                        key={headCell.id}
+                        key={i}
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
@@ -218,7 +221,7 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
     const [dense,] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 
     const handleRequestSort = (
@@ -257,7 +260,7 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Paper sx={{ width: '100%', mb: 2 }}>
+            <Paper css={styles.container} elevation={16}>
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
@@ -283,7 +286,7 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.key}
+                                            key={index}
                                             selected={isItemSelected}
                                         >
                                             <TableCell padding="checkbox">
