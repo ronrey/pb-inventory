@@ -7,14 +7,12 @@ export const styles = createStyles({
     justifyContent: "center",
     margin: "auto",
     marginBottom: 8,
-    marginTop: 8,
+    marginTop: 60,
   },
   headerContainer: {
-    width: '90%',
     display: 'flex',
     justifyContent: 'space-between',
     margin: 'auto',
-    marginTop: 8
   },
   title: {
     margin: "auto",

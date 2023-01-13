@@ -104,7 +104,6 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
     onChange(newBlend);
   };
   const renderCoffeesSelect = () => {
-    debugger
     return (
       <div>
         <SelectCoffees coffeeIDs={blend.coffees ? blend.coffees : []} onChange={handleCoffeesChange} />

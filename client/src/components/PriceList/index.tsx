@@ -80,7 +80,6 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
     onChange(newList);
   };
   const handleEditChange = (key: string, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    debugger
     const newEdit = { ...edit }
     switch (key) {
       case 'price':
@@ -98,7 +97,6 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
     setEdit(newEdit);
   };
   const handleEditMeasurementChange = (event: SelectChangeEvent) => {
-    debugger
     const newEdit = { ...edit }
 
     newEdit.measurement = event.target.value;
@@ -107,7 +105,6 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
   };
 
   const handleListItemMeasurementChange = (i: number, event: SelectChangeEvent) => {
-    debugger
     const newList = [...list];
     const item = newList[i];
     item.measurement = event.target.value;

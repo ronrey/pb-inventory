@@ -87,7 +87,6 @@ export const SelectCoffees: React.FC<Props> = ({ coffeeIDs, onChange }) => {
                     onChange={handleChange}
                     input={<OutlinedInput label="Tag" />}
                     renderValue={(selected) => {
-                        debugger
                         const coffeeIDs = selected.map((select) => getCoffee(select));
                         const coffeeDescs = coffeeIDs.map((coffee) =>
                             `${coffee?.key} - ${coffee?.region.substring(0, 3)} ${coffee?.roast.substring(0, 3)}`)

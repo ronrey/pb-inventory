@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { Coffee } from '../coffee';
 import { CoffeeInput } from "../coffeeInput";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { EnhancedTable } from './enhancedTable'
+import { EnhancedTable } from './enhancedTable';
+import { BottomNav } from '../bottomNav'
 interface TotalCoffees {
   totalCoffees: string;
 }
@@ -304,6 +305,7 @@ export const Coffees: React.FC<Props> = () => {
     <div css={styles.container}>
       {renderDeleteAlert()}
       {coffee ? renderCoffee() : renderCoffees()}
+      <BottomNav me='coffees' />
     </div>
   );
 };

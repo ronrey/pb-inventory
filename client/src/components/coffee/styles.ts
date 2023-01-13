@@ -6,8 +6,7 @@ export const styles = createStyles({
     alignItems: 'center',
     justifyContent: "center",
     margin: "auto",
-    marginBottom: 8,
-    marginTop: 8,
+
   },
   headerContainer: {
     width: '90%',

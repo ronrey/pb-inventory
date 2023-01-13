@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { Blend } from '../blend';
 import { BlendInput } from "../blendInput";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { EnhancedTable } from './enhancedTable'
+import { EnhancedTable } from './enhancedTable';
+import { BottomNav } from '../bottomNav'
+
 interface Blend {
   _id: string
   name: string
@@ -112,7 +114,6 @@ export const Blends: React.FC<Props> = () => {
 
   const [removeBlend] = useMutation(REMOVE_COFFEE, {
     onCompleted(data) {
-      debugger
       console.log(`remove completed sucessfully`)
       // setShowProgress(false);
     },
@@ -302,14 +303,7 @@ export const Blends: React.FC<Props> = () => {
     <div css={styles.container}>
       {renderDeleteAlert()}
       {blend ? renderBlend() : renderBlends()}
-
-      {/* renderGeneral()}
-
-      {renderFlavorProfile()}
-      {renderPrices()}
-      {renderDescriptions() */}
-
-
+      <BottomNav me='blends' />
     </div>
   );
 };

@@ -18,8 +18,8 @@ interface TotalBlends {
 const REFREASH_RATE_OZS = 1000;
 
 const protoBlend = {
-  "_id": "61db72989965179fea72f174",
-  "name": "Ron's Best blend",
+  "_id": "",
+  "name": "name",
   "decaf": false,
   "prices": [
     {
@@ -36,11 +36,11 @@ const protoBlend = {
   "coffees": [
 
   ],
-  "mouthfeel": 0.3,
-  "acidity": 0.65,
-  "caramel": -1.6,
-  "fruit": 0.25,
-  "flower": 0.7,
+  "mouthfeel": 0.0,
+  "acidity": 0.0,
+  "caramel": 0.0,
+  "fruit": 0.0,
+  "flower": 0.0,
   "flavors": [
     "yummy",
     "good"
