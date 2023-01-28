@@ -117,9 +117,6 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
         {
           list.map((price: Price, i: number) => (
             <div css={styles.item} key={i} >
-              <Input css={styles.editInput} value={price.quantity} onChange={(e) => handleListItemChange('quantity', e, i)} type='number' />
-              <Typography css={styles.for}>for</Typography>
-
               <span style={{ marginRight: 4 }}>$</span><Input css={styles.editInput}
                 value={price.price} onChange={(e) => handleListItemChange('price', e, i)}
                 type='number' inputProps={{
@@ -127,7 +124,8 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
                   step: .01,
 
                 }} />
-
+              <Typography css={styles.for}>for</Typography>
+              <Input css={styles.editInput} value={price.quantity} onChange={(e) => handleListItemChange('quantity', e, i)} type='number' />
               <Select
                 value={price.measurement}
                 onChange={(e) => handleListItemMeasurementChange(i, e)}
@@ -135,7 +133,6 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
                 {
                   measurementList.map((item, i) => (<MenuItem key={i} value={item.value}>{item.display}</MenuItem>))
                 }
-
               </Select>
 
               <Button
@@ -155,13 +152,14 @@ export const PriceList: React.FC<Props> = ({ list, onChange, title }) => {
   const renderEdit = () => {
     return (
       <div css={styles.editContainer}  >
-        <Input css={styles.editInput} type="number" value={edit.quantity} onChange={(e) => handleEditChange('quantity', e)} />
-        <Typography css={styles.for}>for</Typography>
         <span style={{ marginRight: 4 }}>$</span><Input css={styles.editInput} type='number' inputProps={{
           min: .01,
           step: .01,
 
         }} value={edit.price} onChange={(e) => handleEditChange('price', e)} />
+        <Typography css={styles.for}>for</Typography>
+        <Input css={styles.editInput} type="number" value={edit.quantity} onChange={(e) => handleEditChange('quantity', e)} />
+
         <Select
           value={edit.measurement}
           onChange={handleEditMeasurementChange}

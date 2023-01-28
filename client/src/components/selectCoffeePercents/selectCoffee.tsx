@@ -6,15 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
 import { useLazyQuery, gql } from "@apollo/client";
 import { useEffect, useState } from 'react';
 interface Coffee {
-    _id: string
     key: number
+    _id: string
     region: string
     roast: string
-    state: string
 }
 interface GetCoffees {
     getCoffees: Coffee[];
@@ -30,14 +28,11 @@ const MenuProps = {
         },
     },
 };
-
-
 interface Props {
-    coffeeIDs: string[],
-    onChange: (coffeeIDs: string[]) => void;
+    coffeeId: string,
+    onChange: (coffeeId: string) => void;
 }
-
-export const SelectCoffees: React.FC<Props> = ({ coffeeIDs, onChange }) => {
+export const SelectCoffee: React.FC<Props> = ({ coffeeId, onChange }) => {
     const GET_COFFEES = gql`
     query GetCoffees {
       getCoffees {
@@ -45,7 +40,6 @@ export const SelectCoffees: React.FC<Props> = ({ coffeeIDs, onChange }) => {
         key
         region
         roast
-        state
       }
     }
   `;
@@ -65,48 +59,49 @@ export const SelectCoffees: React.FC<Props> = ({ coffeeIDs, onChange }) => {
     const getCoffee = (_id: string) => {
         return coffees.find((coffee, i) => coffee._id === _id)
     }
-    const handleChange = (event: SelectChangeEvent<typeof coffeeIDs>) => {
-        //  coffeeIDs
-        const {
-            target: { value },
-        } = event;
+    const handleChange = (event: SelectChangeEvent) => {
         onChange(
-            typeof value === 'string' ? value.split(',') : value,
+            event.target.value
         );
     };
-
-    return (
-        <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Coffees</InputLabel>
+    const renderSelecter = () => {
+        const coffee = getCoffee(coffeeId);
+        return (coffees.length > 0 ?
+            (<FormControl style={{ minWidth: 178 }}>
+                <InputLabel id="demo-multiple-checkbox-label">Coffee</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
-                    multiple
-                    value={coffeeIDs}
+                    value={coffeeId}
                     onChange={handleChange}
                     input={<OutlinedInput label="Tag" />}
-                    renderValue={(selected) => {
-                        const coffeeIDs = selected.map((select) => getCoffee(select));
-                        const coffeeDescs = coffeeIDs.map((coffee) =>
-                            `${coffee?.key} - ${coffee?.region.substring(0, 3)} ${coffee?.roast.substring(0, 3)}`)
-
-                        return coffeeDescs.join(', ')
-                    }}
-                    MenuProps={MenuProps}
+                    renderValue={(coffeeId) => {
+                        if (coffeeId === '') debugger
+                        return `${coffee?.key} - ${coffee?.region.substring(0, 6)} ${coffee?.roast.substring(0, 6)}`
+                    }
+                    } MenuProps={MenuProps}
                 >
+                    <MenuItem key={-1} value={''}>
+                        <ListItemText primary={`select coffee`} />
+                    </MenuItem>
                     {
                         coffees.length > 0 ?
                             coffees.map((coffee, i) => (
                                 <MenuItem key={i} value={coffee._id}>
-                                    <Checkbox checked={coffeeIDs.indexOf(coffee._id) > -1} />
                                     <ListItemText primary={`${coffee.key} - ${coffee.region} ${coffee.roast}`} />
                                 </MenuItem>
                             )) : null}
                 </Select>
-            </FormControl>
+            </FormControl>) : null
+        );
+    }
+    return (
+        <div>
+            {
+                renderSelecter()
+            }
         </div>
     );
 }
 
-export default SelectCoffees;
+export default SelectCoffee;

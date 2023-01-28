@@ -17,7 +17,7 @@ interface Price {
 interface Coffee {
   _id: string
   state: string
-  key: string
+  key: number
   decaf: boolean
   prices: Price[]
   mouthfeel: number
@@ -42,8 +42,9 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
     onChange(newCoffee);
   };
   const handleKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    debugger
     const newCoffee = { ...coffee };
-    newCoffee.key = event.target.value;
+    newCoffee.key = parseInt(event.target.value);
     onChange(newCoffee);
   };
   const handleDecafChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,7 +135,14 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
           <FormControlLabel css={styles.decafLabelSwitch} label="Decaf" control={
             <Switch size="small" checked={coffee.decaf} onChange={handleDecafChange} />
           } />
-          <TextField label="key" css={styles.generalTextField} value={coffee.key} onChange={handleKeyChange} />
+          <TextField label="key" css={styles.generalTextField}
+            type='number'
+            inputProps={{
+              min: 1,
+              step: 1,
+              max: 18,
+            }} value={coffee.key}
+            onChange={handleKeyChange} />
           {renderStateSelect()}
           <RegionSelect region={coffee.region} onChange={handleRegionChange} />
           <RoastSelect roast={coffee.roast} onChange={handleRoastChange} />

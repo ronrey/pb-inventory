@@ -16,7 +16,7 @@ interface Blend {
   state: string
   decaf: boolean
   prices: Price[]
-  coffees: string[]
+  coffees: BlendCoffee[]
   mouthfeel: number
   acidity: number
   caramel: number
@@ -25,6 +25,11 @@ interface Blend {
   flavors: string[]
   qualities: string[]
   paragraphs: string[]
+}
+
+interface BlendCoffee {
+  coffee_id: string
+  percentage: number
 }
 interface TotalBlends {
   totalBlends: string;
@@ -76,7 +81,10 @@ export const Blends: React.FC<Props> = () => {
         _id
         name
         caramel
-        coffees
+        coffees {
+          coffee_id
+          percentage
+        }
         decaf
         flavors
         flower
@@ -164,6 +172,10 @@ export const Blends: React.FC<Props> = () => {
   const createPrices = (blend: Blend) => {
     return blend.prices.map((price) => ({ price: price.price, measurement: price.measurement, quantity: price.quantity }))
   }
+  const createCoffees = (blend: Blend) => {
+    return blend.coffees.map((bc) => ({ coffee_id: bc.coffee_id, percentage: bc.percentage }))
+
+  }
   const createBlendData = () => {
     return blend ? {
       _id: blend._id,
@@ -171,7 +183,7 @@ export const Blends: React.FC<Props> = () => {
       name: blend.name,
       decaf: blend.decaf,
       prices: createPrices(blend),
-      coffees: blend.coffees,
+      coffees: createCoffees(blend),
       mouthfeel: blend.mouthfeel,
       acidity: blend.acidity,
       caramel: blend.caramel,

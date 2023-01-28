@@ -27,15 +27,17 @@ export const styles = createStyles({
   editContainer: {
     display: 'flex',
     flexFlow: 'row',
-    justifyContent: 'space-between',
+    //justifyContent: 'space-around',
     alignItems: 'center',
+    margin: 'auto'
 
     // padding: 8
   },
   itemContainer: {
     display: 'flex',
     flexFlow: 'column',
-    //justifyContent: 'space-between',
+    margin: 'auto',
+    //justifyContent: 'space-around',
     alignItems: 'center',
     // padding: 8
   },

@@ -33,6 +33,9 @@ export const RegionSelect: React.FC<Props> = ({ region, onChange }) => {
     const handleChange = (event: SelectChangeEvent) => {
         onChange(event.target.value);
     };
+    useEffect(() => {
+        regions.sort((a, b) => a.display.localeCompare(b.display))
+    }, [])
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>

@@ -23,7 +23,7 @@ interface Blend {
     state: string
     decaf: boolean
     prices: Price[]
-    coffees: string[]
+    coffees: BlendCoffee[]
     mouthfeel: number
     acidity: number
     caramel: number
@@ -32,6 +32,10 @@ interface Blend {
     flavors: string[]
     qualities: string[]
     paragraphs: string[]
+}
+interface BlendCoffee {
+    coffee_id: string
+    percentage: number
 }
 interface Data {
     _id: string
@@ -212,6 +216,7 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
         onRowClick(_id)
     };
     const handleDeleteClick = (event: React.MouseEvent<unknown>, _id: string) => {
+        event.stopPropagation()
         onDeleteClick(_id)
     };
     const handleChangePage = (event: unknown, newPage: number) => {

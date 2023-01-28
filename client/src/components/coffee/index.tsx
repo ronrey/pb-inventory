@@ -12,27 +12,19 @@ interface Props {
 interface TotalCoffees {
   totalCoffees: string;
 }
-interface AddCoffee {
-  addCoffee(item: Coffee): Status
-}
 const REFREASH_RATE_OZS = 1000;
 
 const protoCoffee = {
   "_id": "",
   "state": "instock",
-  "key": "31",
-  "decaf": true,
+  "key": 1,
+  "decaf": false,
   "prices": [
     {
       "measurement": "lbs",
-      "quantity": 2,
-      "price": 12
+      "quantity": 1,
+      "price": 15
     },
-    {
-      "measurement": "ozs",
-      "quantity": 2,
-      "price": 12
-    }
   ],
   "mouthfeel": 0.5,
   "acidity": 0.5,
@@ -50,7 +42,7 @@ const protoCoffee = {
   "region": "mexico",
   "roast": "vienna",
   "paragraphs": [
-    "paragrph"
+    ""
   ]
 }
 interface Price {
@@ -63,10 +55,10 @@ interface Status {
   code: string
   message: string
 }
-interface Coffee {
+interface CoffeeInterface {
   _id: string
   state: string
-  key: string
+  key: number
   decaf: boolean
   prices: Price[]
   mouthfeel: number
@@ -120,12 +112,11 @@ export const Coffee: React.FC<Props> = () => {
       debugger;
     },
   });
-
   useEffect(() => {
     totalCoffees();
   }, [totalCoffees,]);
 
-  const createPrices = (coffee: Coffee) => {
+  const createPrices = (coffee: CoffeeInterface) => {
     return coffee.prices.map((price) => ({ price: price.price, measurement: price.measurement, quantity: price.quantity }))
   }
   const createCoffeeData = () => {
@@ -160,7 +151,7 @@ export const Coffee: React.FC<Props> = () => {
   const handleNavagateClick = () => {
     navagate('/coffees')
   };
-  const handleCoffeeChange = (coffee: Coffee) => {
+  const handleCoffeeChange = (coffee: CoffeeInterface) => {
     setCoffee(coffee);
   };
 

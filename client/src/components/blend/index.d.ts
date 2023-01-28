@@ -1,7 +1,7 @@
 export declare interface Coffee {
     _id: string
     state: string
-    key: string
+    key: number
     decaf: boolean
     prices: Price[]
     mouthfeel: number

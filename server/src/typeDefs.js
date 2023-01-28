@@ -37,7 +37,7 @@ module.exports = gql`
   type Coffee {
     _id: ID
     state: String
-    key: String
+    key: Int
     decaf: Boolean
     createdAt: DateTime
     updatedAt: DateTime
@@ -56,7 +56,7 @@ module.exports = gql`
   input CoffeeInput {
     _id: ID
     state: String
-    key: String
+    key: Int
     decaf: Boolean
     prices: [PriceInput]
     mouthfeel: Float
@@ -92,7 +92,7 @@ module.exports = gql`
     createdAt: DateTime
     updatedAt: DateTime
     prices: [Price]
-    coffees: [ID]
+    coffees: [BlendCoffee]
     mouthfeel: Float
     acidity: Float
     caramel: Float
@@ -108,7 +108,7 @@ module.exports = gql`
     decaf: Boolean
     name: String
     prices: [PriceInput]
-    coffees: [ID]
+    coffees: [BlendCoffeeInput]
     mouthfeel: Float
     acidity: Float
     caramel: Float
@@ -117,6 +117,14 @@ module.exports = gql`
     flavors: [String!]
     qualities: [String!]
     paragraphs: [String!]
+  }
+  type BlendCoffee {
+    coffee_id:ID
+    percentage:Float
+  }
+  input BlendCoffeeInput {
+    coffee_id:ID
+    percentage:Float
   }
 
   #order
@@ -266,7 +274,7 @@ module.exports = gql`
     caramel: Float
     fruit: Float
     flower: Float
-    key: String
+    key: Int
     createdAt: DateTime
     approvedAt: DateTime
     state: String
@@ -277,6 +285,6 @@ module.exports = gql`
     caramel: Float
     fruit: Float
     flower: Float
-    key: String
+    key: Int
   }
 `;

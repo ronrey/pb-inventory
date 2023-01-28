@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { styles } from "./styles";
-
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,7 +22,7 @@ interface Price {
 interface Coffee {
     _id: string
     state: string
-    key: string
+    key: number
     decaf: boolean
     prices: Price[]
     mouthfeel: number
@@ -40,7 +39,7 @@ interface Coffee {
 interface Data {
     _id: string
     state: string
-    key: string
+    key: number
     decaf: boolean
     mouthfeel: number
     acidity: number
@@ -50,12 +49,10 @@ interface Data {
     region: string
     roast: string
 }
-
 interface Props {
     data: Coffee[];
     onRowClick: (id: string) => void;
     onDeleteClick: (id: string) => void;
-
 }
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -66,7 +63,6 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     }
     return 0;
 }
-
 type Order = 'asc' | 'desc';
 function getComparator<Key extends keyof any>(
     order: Order,
@@ -79,7 +75,6 @@ function getComparator<Key extends keyof any>(
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
 // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
 // stableSort() brings sort stability to non-modern browsers (notably IE11). If you
 // only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
@@ -95,14 +90,12 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     });
     return stabilizedThis.map((el) => el[0]);
 }
-
 interface HeadCell {
     disablePadding: boolean;
     id: keyof Data;
     label: string;
     numeric: boolean;
 }
-
 const headCells: readonly HeadCell[] = [
     {
         id: 'key',
@@ -164,15 +157,12 @@ const headCells: readonly HeadCell[] = [
         disablePadding: false,
         label: 'flower',
     },
-
 ];
-
 interface EnhancedTableProps {
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
     order: Order;
     orderBy: string;
 }
-
 function EnhancedTableHead(props: EnhancedTableProps) {
     const { order, orderBy, onRequestSort } =
         props;
@@ -180,7 +170,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
-
     return (
         <TableHead>
             <TableRow>
@@ -212,18 +201,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         </TableHead>
     );
 }
-
-
 export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick }) => {
-
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('key');
-    const [selected, setSelected] = React.useState<readonly string[]>([]);
+    const [selected, setSelected] = React.useState<readonly number[]>([]);
     const [page, setPage] = React.useState(0);
     const [dense,] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
         property: keyof Data,
@@ -232,32 +216,22 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
-
     const handleClick = (event: React.MouseEvent<unknown>, _id: string) => {
         onRowClick(_id)
     };
     const handleDeleteClick = (event: React.MouseEvent<unknown>, _id: string) => {
+        event.stopPropagation()
         onDeleteClick(_id)
     };
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
-
-
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
     // Avoid a layout jump when reaching the last page with empty data.
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
     return (
         <Box sx={{ width: '100%' }}>
             <Paper css={styles.container} elevation={16}>
@@ -276,7 +250,6 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
                             {stableSort(data, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.key);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
@@ -284,10 +257,8 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
                                             hover
                                             onClick={(event) => handleClick(event, row._id)}
                                             role="checkbox"
-                                            aria-checked={isItemSelected}
                                             tabIndex={-1}
                                             key={index}
-                                            selected={isItemSelected}
                                         >
                                             <TableCell padding="checkbox">
                                                 <Button
@@ -338,9 +309,7 @@ export const EnhancedTable: React.FC<Props> = ({ data, onDeleteClick, onRowClick
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-
         </Box>
     );
 }
-
 export default EnhancedTable

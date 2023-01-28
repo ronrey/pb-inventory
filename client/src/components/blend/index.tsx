@@ -65,7 +65,7 @@ interface BlendInterface {
   state: string
   decaf: boolean
   prices: Price[]
-  coffees: string[]
+  coffees: BlendCoffee[]
   mouthfeel: number
   acidity: number
   caramel: number
@@ -74,6 +74,10 @@ interface BlendInterface {
   flavors: string[]
   qualities: string[]
   paragraphs: string[]
+}
+interface BlendCoffee {
+  coffee_id: string
+  percentage: number
 }
 interface Props { }
 export const Blend: React.FC<Props> = () => {

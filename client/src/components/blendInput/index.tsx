@@ -8,8 +8,7 @@ import Switch from '@mui/material/Switch';
 import { StringList } from '../StringList';
 import { PriceList } from '../PriceList'
 import { inventory_status } from '../../constants/select'
-import SelectCoffees from './selectCoffees'
-
+import { SelectCoffeePercents } from '../selectCoffeePercents'
 interface Price {
   measurement: string
   quantity: number
@@ -21,7 +20,7 @@ interface Blend {
   state: string
   decaf: boolean
   prices: Price[]
-  coffees: string[]
+  coffees: BlendCoffee[]
   mouthfeel: number
   acidity: number
   caramel: number
@@ -30,6 +29,10 @@ interface Blend {
   flavors: string[]
   qualities: string[]
   paragraphs: string[]
+}
+interface BlendCoffee {
+  coffee_id: string
+  percentage: number
 }
 interface Props {
   blend: Blend
@@ -98,16 +101,20 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
     newBlend.prices = prices;
     onChange(newBlend);
   };
-  const handleCoffeesChange = (coffeeIds: string[]) => {
+  const handleCoffeesChange = (coffees: BlendCoffee[]) => {
     const newBlend = { ...blend };
-    newBlend.coffees = coffeeIds;
+    newBlend.coffees = coffees;
     onChange(newBlend);
   };
   const renderCoffeesSelect = () => {
+
     return (
-      <div>
-        <SelectCoffees coffeeIDs={blend.coffees ? blend.coffees : []} onChange={handleCoffeesChange} />
-      </div>
+      <Paper css={styles.paper} elevation={4} >
+        <Typography variant="h6" css={styles.sectionLabel}>general</Typography>
+        <SelectCoffeePercents items={blend.coffees ? blend.coffees : []} onChange={handleCoffeesChange} />
+
+      </Paper>
+
     )
   }
   const renderStateSelect = () => {
@@ -139,10 +146,9 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
           } />
           <TextField label="name" css={styles.textField} value={blend.name} onChange={handleNameChange} />
           {renderStateSelect()}
-          {renderCoffeesSelect()}
+
         </div>
       </Paper>
-
     )
   }
   const renderPrices = () => {
@@ -214,6 +220,7 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
   return (
     <Paper elevation={16} css={styles.container}>
       {renderGeneral()}
+      {renderCoffeesSelect()}
       {renderFlavorProfile()}
       {renderPrices()}
       {renderDescriptions()}
