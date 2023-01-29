@@ -45,6 +45,7 @@ export const styles = createStyles({
   generalContainer: {
     display: 'flex',
     flexFlow: 'row wrap',
+    alignItems: 'center',
     margin: 8,
   },
   pricesContainer: {

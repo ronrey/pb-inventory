@@ -4,6 +4,8 @@ import { TextField, Typography, Button } from "@mui/material";
 import { styles } from "./styles";
 import { SelectCoffee } from "./selectCoffee"
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 interface BlendCoffee {
     coffee_id: string
@@ -36,10 +38,28 @@ export const SelectCoffeePercents: React.FC<Props> = ({ items, onChange }) => {
         newItems[i].percentage = percentage;
         onChange(newItems);
     };
+    const handleDelete = (i: number) => {
+        const newItems = [...items];
+        newItems.splice(i, 1);
+        onChange(newItems);
+    };
     const renderItems = () => {
         return (
-            <div>
-                {items.map((item, i) => renderItem(item, i))}
+            <div css={styles.container} >
+                {items.map((item, i) => (
+                    <div css={styles.coffeePercentContainer} key={i} >
+                        <Button
+
+                            size="small"
+                            color="primary"
+                            onClick={() => handleDelete(i)}
+                        >
+                            <DeleteIcon fontSize="small" />
+                        </Button>
+                        {renderItem(item, i)}
+                    </div>
+
+                ))}
             </div>
         )
     }

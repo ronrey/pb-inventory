@@ -6,6 +6,13 @@ export const styles = createStyles({
     margin: 8,
     marginTop: 8,
   },
+  coffeePercentContainer: {
+    display: "flex",
+    flexFlow: "row wrap",
+    marginRight: 8,
+    marginTop: 8,
+    marginBottom: 4,
+  },
   inputsContainer: {
     display: 'flex',
     flexFlow: 'column wrap',

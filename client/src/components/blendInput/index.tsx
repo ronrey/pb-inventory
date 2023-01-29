@@ -110,7 +110,10 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
 
     return (
       <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>general</Typography>
+        <Typography variant="h6" css={styles.sectionLabel}>coffees</Typography>
+        <FormControlLabel css={styles.decafLabelSwitch} label="Decaf" control={
+          <Switch size="small" checked={blend.decaf} onChange={handleDecafChange} />
+        } />
         <SelectCoffeePercents items={blend.coffees ? blend.coffees : []} onChange={handleCoffeesChange} />
 
       </Paper>
@@ -141,9 +144,7 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
       <Paper css={styles.paper} elevation={4} >
         <Typography variant="h6" css={styles.sectionLabel}>general</Typography>
         <div css={styles.generalContainer}>
-          <FormControlLabel css={styles.decafLabelSwitch} label="Decaf" control={
-            <Switch size="small" checked={blend.decaf} onChange={handleDecafChange} />
-          } />
+
           <TextField label="name" css={styles.textField} value={blend.name} onChange={handleNameChange} />
           {renderStateSelect()}
 
