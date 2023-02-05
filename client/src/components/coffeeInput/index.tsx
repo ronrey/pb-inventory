@@ -138,9 +138,9 @@ export const CoffeeInput: React.FC<Props> = ({ coffee, onChange }) => {
           <TextField label="key" css={styles.generalTextField}
             type='number'
             inputProps={{
-              min: 1,
+              min: 0,
               step: 1,
-              max: 18,
+              max: 17,
             }} value={coffee.key}
             onChange={handleKeyChange} />
           {renderStateSelect()}

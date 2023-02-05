@@ -17,7 +17,7 @@ const REFREASH_RATE_OZS = 1000;
 const protoCoffee = {
   "_id": "",
   "state": "instock",
-  "key": 1,
+  "key": 0,
   "decaf": false,
   "prices": [
     {
