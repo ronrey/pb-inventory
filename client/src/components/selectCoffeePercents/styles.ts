@@ -14,42 +14,42 @@ export const styles = createStyles({
     marginBottom: 4,
   },
   inputsContainer: {
-    display: 'flex',
-    flexFlow: 'column wrap',
+    display: "flex",
+    flexFlow: "column wrap",
     margin: 8,
-    padding: 12
+    padding: 12,
   },
   textField: {
     width: 80,
   },
   percentageField: {
-    width: 60,
+    width: 80,
   },
   customItems: {
-    display: 'flex',
-    flexFlow: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    display: "flex",
+    flexFlow: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
     margin: 4,
-    padding: 8
+    padding: 8,
   },
   editCustomItems: {
-    display: 'flex',
-    flexFlow: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    display: "flex",
+    flexFlow: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
     marginBottom: 8,
     marginLeft: 8,
     // padding: 20
   },
   customItem: {
-    display: 'flex',
-    flexFlow: 'row',
+    display: "flex",
+    flexFlow: "row",
     marginBottom: 8,
   },
   coffeItemsContainer: {
-    display: 'flex',
-    flexFlow: 'row',
-    alignItems: 'center',
-  }
+    display: "flex",
+    flexFlow: "row",
+    alignItems: "center",
+  },
 });
