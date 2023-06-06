@@ -40,7 +40,6 @@ export const styles = createStyles({
     alignItems: "center",
     marginBottom: 8,
     marginLeft: 8,
-    // padding: 20
   },
   customItem: {
     display: "flex",

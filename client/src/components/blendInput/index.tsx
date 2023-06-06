@@ -1,45 +1,53 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
-import { FormControl, InputLabel, MenuItem, Paper, TextField, Typography } from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { styles } from "./styles";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import { StringList } from '../StringList';
-import { PriceList } from '../PriceList'
-import { inventory_status } from '../../constants/select'
-import { SelectCoffeePercents } from '../selectCoffeePercents'
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import { StringList } from "../StringList";
+import { PriceList } from "../PriceList";
+import { inventory_status } from "../../constants/select";
+import { SelectCoffeePercents } from "../selectCoffeePercents";
 interface Price {
-  measurement: string
-  quantity: number
-  price: number
+  measurement: string;
+  quantity: number;
+  price: number;
 }
 interface Blend {
-  _id: string
-  name: string
-  state: string
-  decaf: boolean
-  prices: Price[]
-  coffees: BlendCoffee[]
-  mouthfeel: number
-  acidity: number
-  caramel: number
-  fruit: number
-  flower: number
-  flavors: string[]
-  qualities: string[]
-  paragraphs: string[]
+  _id: string;
+  name: string;
+  state: string;
+  decaf: boolean;
+  prices: Price[];
+  coffees: BlendCoffee[];
+  mouthfeel: number;
+  acidity: number;
+  caramel: number;
+  fruit: number;
+  flower: number;
+  flavors: string[];
+  qualities: string[];
+  paragraphs: string[];
 }
 interface BlendCoffee {
-  coffee_id: string
-  percentage: number
+  coffee_id: string;
+  percentage: number;
 }
 interface Props {
-  blend: Blend
+  blend: Blend;
   onChange: (blend: Blend) => void;
 }
 export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
-  const handleParagraphChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleParagraphChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const newBlend = { ...blend };
     newBlend.paragraphs = [event.target.value];
     onChange(newBlend);
@@ -61,7 +69,9 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
     onChange(newBlend);
   };
 
-  const handleMouthfeelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMouthfeelChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const newBlend = { ...blend };
     newBlend.mouthfeel = parseFloat(event.target.value);
     onChange(newBlend);
@@ -107,19 +117,29 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
     onChange(newBlend);
   };
   const renderCoffeesSelect = () => {
-
     return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>coffees</Typography>
-        <FormControlLabel css={styles.decafLabelSwitch} label="Decaf" control={
-          <Switch size="small" checked={blend.decaf} onChange={handleDecafChange} />
-        } />
-        <SelectCoffeePercents items={blend.coffees ? blend.coffees : []} onChange={handleCoffeesChange} />
-
+      <Paper css={styles.paper} elevation={4}>
+        <Typography variant="h6" css={styles.sectionLabel}>
+          coffees
+        </Typography>
+        <FormControlLabel
+          css={styles.decafLabelSwitch}
+          label="Decaf"
+          control={
+            <Switch
+              size="small"
+              checked={blend.decaf}
+              onChange={handleDecafChange}
+            />
+          }
+        />
+        <SelectCoffeePercents
+          items={blend.coffees ? blend.coffees : []}
+          onChange={handleCoffeesChange}
+        />
       </Paper>
-
-    )
-  }
+    );
+  };
   const renderStateSelect = () => {
     return (
       <FormControl style={{ width: 140 }}>
@@ -131,92 +151,149 @@ export const BlendInput: React.FC<Props> = ({ blend, onChange }) => {
           label="state"
           onChange={handleStateChange}
         >
-          {
-            inventory_status.map((item, i) => (<MenuItem key={i} value={item.value}>{item.display}</MenuItem>))
-          }
-
+          {inventory_status.map((item, i) => (
+            <MenuItem key={i} value={item.value}>
+              {item.display}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
-    )
-  }
+    );
+  };
   const renderGeneral = () => {
     return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>general</Typography>
+      <Paper css={styles.paper} elevation={4}>
+        <Typography variant="h6" css={styles.sectionLabel}>
+          general
+        </Typography>
         <div css={styles.generalContainer}>
-
-          <TextField label="name" css={styles.textField} value={blend.name} onChange={handleNameChange} />
+          <TextField
+            label="name"
+            css={styles.textField}
+            value={blend.name}
+            onChange={handleNameChange}
+          />
           {renderStateSelect()}
-
         </div>
       </Paper>
-    )
-  }
+    );
+  };
   const renderPrices = () => {
     return (
-      <Paper css={styles.paper} elevation={4} >
-        <PriceList list={blend.prices} onChange={handlePriceChange} title="prices" />
+      <Paper css={styles.paper} elevation={4}>
+        <PriceList
+          list={blend.prices}
+          onChange={handlePriceChange}
+          title="prices"
+        />
       </Paper>
-    )
-  }
+    );
+  };
   const renderDescriptions = () => {
     return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>descriptions</Typography>
+      <Paper css={styles.paper} elevation={4}>
+        <Typography variant="h6" css={styles.sectionLabel}>
+          descriptions
+        </Typography>
         <div css={styles.generalContainer}>
-          <StringList list={blend.flavors} onChange={handleFlavorsChange} title="flavors" />
-          <StringList list={blend.qualities} onChange={handleQualitiesChange} title="qualities" />
+          <StringList
+            list={blend.flavors}
+            onChange={handleFlavorsChange}
+            title="flavors"
+          />
+          <StringList
+            list={blend.qualities}
+            onChange={handleQualitiesChange}
+            title="qualities"
+          />
         </div>
-        <TextField label="paragraph"
+        <TextField
+          label="paragraph"
           multiline
           rows={4}
           css={styles.paragraphTextField}
           value={blend.paragraphs[0]}
-          onChange={handleParagraphChange} />
-
+          onChange={handleParagraphChange}
+        />
       </Paper>
-    )
-  }
+    );
+  };
   const renderFlavorProfile = () => {
     return (
-      <Paper css={styles.paper} elevation={4} >
-        <Typography variant="h6" css={styles.sectionLabel}>flavor profile</Typography>
+      <Paper css={styles.paper} elevation={4}>
+        <Typography variant="h6" css={styles.sectionLabel}>
+          flavor profile
+        </Typography>
         <div css={styles.flavorProfileContainer}>
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .10,
-            step: .10,
-            max: 1.0,
-
-          }} label="mouthfeel" value={blend.mouthfeel} onChange={handleMouthfeelChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .10,
-            step: .10,
-            max: 1.0,
-
-          }} label="acidity" value={blend.acidity} onChange={handleAcidityChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .10,
-            step: .10,
-            max: 1.0,
-
-          }} label="caramel" value={blend.caramel} onChange={handleCaramelChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .10,
-            step: .10,
-            max: 1.0,
-
-          }} label="fruit" value={blend.fruit} onChange={handleFruitChange} type='number' />
-          <TextField css={styles.flavorProfile} variant='outlined' inputProps={{
-            min: .10,
-            step: .10,
-            max: 1.0,
-
-          }} label="flower" value={blend.flower} onChange={handleFlowerChange} type='number' />
+          <TextField
+            css={styles.flavorProfile}
+            variant="outlined"
+            inputProps={{
+              min: 0.1,
+              step: 0.1,
+              max: 1.0,
+            }}
+            label="mouthfeel"
+            value={blend.mouthfeel}
+            onChange={handleMouthfeelChange}
+            type="number"
+          />
+          <TextField
+            css={styles.flavorProfile}
+            variant="outlined"
+            inputProps={{
+              min: 0.1,
+              step: 0.1,
+              max: 1.0,
+            }}
+            label="acidity"
+            value={blend.acidity}
+            onChange={handleAcidityChange}
+            type="number"
+          />
+          <TextField
+            css={styles.flavorProfile}
+            variant="outlined"
+            inputProps={{
+              min: 0.1,
+              step: 0.1,
+              max: 1.0,
+            }}
+            label="caramel"
+            value={blend.caramel}
+            onChange={handleCaramelChange}
+            type="number"
+          />
+          <TextField
+            css={styles.flavorProfile}
+            variant="outlined"
+            inputProps={{
+              min: 0.1,
+              step: 0.1,
+              max: 1.0,
+            }}
+            label="fruit"
+            value={blend.fruit}
+            onChange={handleFruitChange}
+            type="number"
+          />
+          <TextField
+            css={styles.flavorProfile}
+            variant="outlined"
+            inputProps={{
+              min: 0.1,
+              step: 0.1,
+              max: 1.0,
+            }}
+            label="flower"
+            value={blend.flower}
+            onChange={handleFlowerChange}
+            type="number"
+          />
         </div>
       </Paper>
-
-    )
-  }
+    );
+  };
 
   return (
     <Paper elevation={16} css={styles.container}>

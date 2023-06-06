@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TextField, Typography, Button } from "@mui/material";
 import { styles } from "./styles";
 import { SelectCoffee } from "./selectCoffee";
