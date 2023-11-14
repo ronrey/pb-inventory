@@ -21,12 +21,19 @@ export const Mutation = {
 
   updateCoffee: async (_: null, args: { item: any }): Promise<IStatus> => {
     try {
-      await InventoryService.updateCoffee(args.item);
-      return {
-        success: true,
-        code: 200,
-        message: "Coffee updated successfully",
-      };
+      const coffee = await InventoryService.updateCoffee(args.item);
+      if (!coffee) {
+        return {
+          success: false,
+          code: 500,
+          message: "Coffee not found",
+        };
+      } else
+        return {
+          success: true,
+          code: 200,
+          message: "Coffee updated successfully",
+        };
     } catch (error: any) {
       return {
         success: false,
@@ -72,12 +79,19 @@ export const Mutation = {
 
   updateBlend: async (_: any, { item }: { item: IBlend }): Promise<IStatus> => {
     try {
-      await InventoryService.updateBlend(item);
-      return {
-        success: true,
-        code: 200,
-        message: "Blend updated successfully",
-      };
+      const blend = await InventoryService.updateBlend(item);
+      if (!blend) {
+        return {
+          success: false,
+          code: 500,
+          message: "Blend not found",
+        };
+      } else
+        return {
+          success: true,
+          code: 200,
+          message: "Blend updated successfully",
+        };
     } catch (error: any) {
       return {
         success: false,
