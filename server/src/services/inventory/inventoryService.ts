@@ -32,11 +32,11 @@ class InventoryService {
     return await coffee.save();
   }
 
-  async updateCoffee(
-    id: string,
-    coffeeData: any
-  ): Promise<CoffeeDocument | null> {
-    return await Coffee.findByIdAndUpdate(id, coffeeData, { new: true });
+  async updateCoffee(item: any): Promise<CoffeeDocument | null> {
+    const { _id } = item;
+    delete item._id;
+    item.modifiedAt = new Date();
+    return await Coffee.findByIdAndUpdate(_id, item, { new: true });
   }
 
   async deleteCoffee(id: string): Promise<CoffeeDocument | null> {
@@ -48,8 +48,11 @@ class InventoryService {
     return await blend.save();
   }
 
-  async updateBlend(id: string, blendData: any): Promise<BlendDocument | null> {
-    return await Blend.findByIdAndUpdate(id, blendData, { new: true });
+  async updateBlend(item: any): Promise<BlendDocument | null> {
+    const { _id } = item;
+    delete item._id;
+    item.modifiedAt = new Date();
+    return await Blend.findByIdAndUpdate(_id, item, { new: true });
   }
 
   async deleteBlend(id: string): Promise<BlendDocument | null> {

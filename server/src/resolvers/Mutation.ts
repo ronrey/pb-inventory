@@ -19,12 +19,9 @@ export const Mutation = {
     }
   },
 
-  updateCoffee: async (
-    _: any,
-    { id, item }: { id: string; item: ICoffee }
-  ): Promise<IStatus> => {
+  updateCoffee: async (_: null, args: { item: any }): Promise<IStatus> => {
     try {
-      await InventoryService.updateCoffee(id, item);
+      await InventoryService.updateCoffee(args.item);
       return {
         success: true,
         code: 200,
@@ -73,12 +70,9 @@ export const Mutation = {
     }
   },
 
-  updateBlend: async (
-    _: any,
-    { id, item }: { id: string; item: IBlend }
-  ): Promise<IStatus> => {
+  updateBlend: async (_: any, { item }: { item: IBlend }): Promise<IStatus> => {
     try {
-      await InventoryService.updateBlend(id, item);
+      await InventoryService.updateBlend(item);
       return {
         success: true,
         code: 200,
