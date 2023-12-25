@@ -14,13 +14,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.6",
     "@types/express": "latest",
     "@types/mongodb": "^4.0.7",
-    "@types/node": "latest",
-    "nodemon": "^latest",
-    "ts-node": "latest",
-    "ts-node-dev": "^latest",
     "@types/mongoose": "^5.11.97",
+    "@types/node": "latest",
+    "nodemon": "latest",
+    "ts-node": "latest",
+    "ts-node-dev": "latest",
     "typescript": "^5.2.2"
   },
   "dependencies": {
@@ -28,7 +29,7 @@
     "apollo-server": "^3.12.1",
     "apollo-server-core": "^3.12.1",
     "apollo-server-express": "^3.12.1",
-    "cookie-parser": "latest",
+    "cookie-parser": "^1.4.6",
     "cors": "latest",
     "express": "latest",
     "graphql": "latest",

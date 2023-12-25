@@ -6,7 +6,7 @@ interface IPrice {
   price: number;
 }
 
-interface ICoffee extends Document {
+export interface ICoffee extends Document {
   state: string;
   key: number;
   decaf: boolean;
@@ -30,7 +30,7 @@ interface IBlendCoffee {
   percentage: number;
 }
 
-interface IBlend extends Document {
+export interface IBlend extends Document {
   state: string;
   decaf: boolean;
   name: string;
